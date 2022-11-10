@@ -9,8 +9,8 @@
           <v-spacer></v-spacer>
 
           <v-btn icon>
-            <v-icon v-if="liked_post" @click.native="toggle_like">mdi-cards-heart</v-icon>
-            <v-icon v-else @click.native="toggle_like">mdi-cards-heart-outline</v-icon>
+            <v-icon v-if="liked_post" color="primary" @click="liked_post = false">mdi-cards-heart</v-icon>
+            <v-icon v-else @click="liked_post = true">mdi-cards-heart-outline</v-icon>
           </v-btn>
         </v-toolbar>
 
@@ -29,6 +29,7 @@ export default {
   async asyncData(context) {
     const slug = context.params?.slug || 'index'
     const document = await context.$content(`writings/${slug}`).fetch()
+    console.log(document)
     const title = document.title
     return {
       document,
@@ -42,21 +43,31 @@ export default {
     }
   },
   watch: {
-    liked_posts(newPosts, _oldPosts) {
-      newPosts.includes(this.title) ? (this.liked_post = true) : (this.liked_post = false)
+    liked_post(new_state) {
+      if (new_state){
+        this.liked_posts.push(this.title)
+      } else {
+        this.liked_posts = this.liked_posts.filter(post => post !== this.title)
+      }
+    },
+    liked_posts(new_state) {
+      localStorage.setItem('liked_posts', JSON.stringify(new_state))
     }
   },
   mounted() {
     const liked_posts = localStorage.getItem('liked_posts')
-    liked_posts && (this.liked_posts = JSON.parse(liked_posts))
+    if (liked_posts) { this.liked_posts = JSON.parse(liked_posts) }
   },
-  methods: {
-    toggle_like() {
-      const did_like_post = this.liked_posts.includes(this.title)
-      did_like_post && (this.liked_posts = this.liked_posts.filter(post => post === this.title))
-      !did_like_post && (this.liked_posts.push())
-    },
-  },
+  /* created() { */
+  /*   console.log('LIKED_POSTS created', localStorage.getItem('liked_posts')) */
+  /* }, */
+  /* methods: { */
+  /*   toggle_like() { */
+  /*     const did_like_post = this.liked_posts.includes(this.title) */
+  /*     did_like_post && (this.liked_posts = this.liked_posts.filter((post) => post === this.title)) */
+  /*     !did_like_post && this.liked_posts.push() */
+  /*   }, */
+  /* }, */
 }
 </script>
 

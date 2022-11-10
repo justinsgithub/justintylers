@@ -1,15 +1,24 @@
 import express from 'express'
-const app = express()
+import { connect_to_database } from './services/database'
+import { writings_router } from './routes/writings'
+import { hello_router } from './routes/hello'
 
-const hello = require('./hello')
-
-app.use(hello)
+export const app = express()
+app.use('/hello', hello_router)
+app.use('/writings', writings_router)
 
 if (require.main === module) {
   const port = 3001
-  app.listen(port, () => {
-    console.log(`API server listening on port ${port}`)
-  })
+  connect_to_database()
+    .then(() => {
+      app.listen(port, () => {
+        console.log(`Server started at http://localhost:${port}`)
+      })
+    })
+    .catch((error: Error) => {
+      console.error('Database connection failed', error)
+      process.exit()
+    })
 }
 
 module.exports = app

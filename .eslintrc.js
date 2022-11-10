@@ -12,6 +12,7 @@ module.exports = {
   plugins: [],
   // add your custom rules here
   rules: {
-    camelcase: 0
+    camelcase: 0,
+    'no-console': 0
   },
 }
