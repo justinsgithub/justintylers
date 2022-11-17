@@ -1,56 +1,171 @@
-<template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="justify-center text-center">
-        <v-card-title class="headline justify-center jh"> Justin Angeles </v-card-title>
-        <v-avatar size="150">
-          <img src="/images/justin-angeles.jpg" alt="Justin Angeles" />
-        </v-avatar>
-        <v-card-text>
-          <p>Thanks for taking the time to visit my site 😊 Here you can find links to my projects, accounts, and activities on the web 🌐</p>
-          <hr class="my-9" />
-        </v-card-text>
-      </v-card>
+<script lang="ts" setup>
 
-      <home-project-card v-for="project in projects" :key="project.title" v-bind="project" />
-    </v-col>
-  </v-row>
-</template>
+useHead({
+  title: 'Home'
+})
 
-<script>
-export default {
-  data() {
-    return {
-      projects: [
-        {
-          title: 'Creative Writings',
-          description: 'I enjoy creative writing as a form of therapy. My writings helped me deal with a lot of childhood trauma and recover from meth addiction.',
-          image: '/images/simplenote-writings.png',
-          href: '/writings',
-          alt: 'Justins Creative Writings',
-        },
-        {
-          title: 'Learning Documentation',
-          description: 'I created study docs and document things I learn about. Currently it is pretty much all tech subjects.',
-          image: '/images/learning-docs-cover.png',
-          href: 'https://docs.justintylers.com',
-          alt: 'Justins learning documentation website',
-        },
-        {
-          title: 'Software Development Portfolio',
-          description: 'Self-taught software engineer. I have a wide range of experience including SQL & NoSQL databases, Ruby, Python, Linux systems / tools, and the JavaScript ecosystem. Happy to give advice to anyone interested in learning, even figuring out where to start can be difficult.',
-          image: '/images/portfolio-cover.png',
-          href: 'https://portfolio.justintylers.com',
-          alt: 'Justins software development portfolio',
-        },
-      ],
-    }
-  },
-}
 </script>
 
+<template>
+  <div class="flex-1 flex relative">
+    <div class="flex-1 flex">
+      <section class="flex-1 flex">
+        <div class="flex-1 flex flex-col items-center z-10">
+          <h1 class="text-center mt-9 drop-shadow-xl text-5xl block">
+              Justin Angeles
+          </h1>
+          <div class="flex space-x-4 mx-4 mt-10 justify-center max-w-lg">
+            <p class="card-content">
+              Thank you for taking the time to visit my site. Here you can find links to my various accounts and activites on the web. 😊
+              <!--Also feel free to checkout my writings, please enjoy and any feedback is always appreciated 😊.-->
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</template>
+
 <style lang="scss">
-.jh {
-  color: $title-color;
+@import '../assets/sass/variables';
+
+@keyframes anim-fg-1 {
+  0%,
+  16.667%,
+  100% {
+    opacity: 1;
+  }
+
+  33.333%,
+  83.333% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes anim-fg-2 {
+  0%,
+  16.667%,
+  66.667%,
+  100% {
+    opacity: 0;
+  }
+
+  33.333%,
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes anim-fg-3 {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+
+  66.667%,
+  83.333% {
+    opacity: 1;
+  }
+}
+
+.animated-text-bg {
+  position: relative;
+  display: block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  content: var(--content);
+  display: block;
+  width: 100%;
+  color: theme('colors.slate.800');
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  padding-left: $padding;
+  padding-right: $padding;
+  &:before {
+    content: var(--content);
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: theme('colors.slate.800');
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    padding-left: $padding;
+    padding-right: $padding;
+  }
+}
+.animated-text-fg {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-left: $padding;
+  padding-right: $padding;
+  background-image: linear-gradient(90deg, var(--start-color), var(--end-color));
+  position: relative;
+  opacity: 0;
+  z-index: 1;
+  animation: var(--animation-name) 8s infinite;
+}
+
+html.dark {
+  .animated-text-bg {
+    color: theme('colors.gray.100');
+    &:before {
+      color: theme('colors.gray.100');
+    }
+  }
+}
+
+.triangle-shape {
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 40px solid theme('colors.green.600');
+  transform: translate(-15rem, -6rem) rotate(45deg);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 </style>

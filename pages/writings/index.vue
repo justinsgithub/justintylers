@@ -1,33 +1,53 @@
-<template>
-  <v-row justify="center" align="center">
-    <v-col cols="12">
-      <h1 class="text-h2 wh">Writings</h1>
-      <writings-preview-card v-for="writing in writings" :key="writing.title" v-bind="writing"/>
-    </v-col>
-  </v-row>
-</template>
+<script lang="ts" setup>
+import { capitalize } from '~/utils/str'
 
-<script lang="ts">
-import { Context } from '@nuxt/types'
+// composable
+const { t } = useLang()
 
-export default {
-  async asyncData(context: Context) {
-    console.log(context)
-    const page = await context.$content('writings/1-am').fetch()
-    const writings = await context.$content('writings').fetch()
-    console.log(writings)
-    return {
-      page,
-      writings
-    }
-  },
-}
+// compiler macro
+/* definePageMeta({ */
+/*   layout: 'page', */
+/* }) */
+useHead(() => ({
+  title: 'Writings',
+  meta: [
+    {
+      name: 'description',
+      content: t('pages.post.description'),
+    },
+  ],
+}))
 </script>
 
-<style lang="scss">
-.wh {
-  text-align: center;
-  color: $title-color;
-}
-
-</style>
+<template>
+  <PageWrapper>
+    <PageHeader>
+      <PageTitle text="Writings" class="capitalize" />
+    </PageHeader>
+    <PageBody>
+      <ContentList v-slot="{ list }" path="/writings">
+        <PageSection v-for="article in list" :key="article._path">
+          <div class="block hover:no-underline p-6 flex space-x-6 rounded border border-gray-900/10 dark:border-gray-50/[0.2]" >
+            <div class="flex flex-col">
+              <div class="text-xl font-semibold text-slate-800 dark:text-gray-50" >
+                {{ article.title }}
+              </div>
+              <div class="text-slate-700 dark:text-gray-300 mb-2 mt-2">
+                <pre>{{ article.description }}</pre>
+              </div>
+              <div class="flex">
+                <Anchor
+                  class="text-sm flex space-x-1 items-center text-primary-500"
+                  :to="article._path"
+                >
+                  <span> Read </span>
+                  <icon:ic:baseline-arrow-right-alt class="text-sm" />
+                </Anchor>
+              </div>
+            </div>
+          </div>
+        </PageSection>
+      </ContentList>
+    </PageBody>
+  </PageWrapper>
+</template>
