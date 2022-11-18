@@ -14,6 +14,9 @@ import FiltersPlugin from 'windicss/plugin/filters'
 
 const MyTheme = {
   colors: {
+    cust: {
+      DEFAULT: '#1e2127',
+    },
     green: {
       DEFAULT: '#3BA676',
       '50': '#B4E4CF',
@@ -77,9 +80,8 @@ export default defineConfig({
         '8xl': '90rem',
       },
       colors: {
+        cust: MyTheme.colors.cust,
         primary: MyTheme.colors.red,
-        // if want to change primary color to green
-        // primary: MyTheme.colors.blue,
         green: MyTheme.colors.green,
         blue: MyTheme.colors.blue,
         red: MyTheme.colors.red,

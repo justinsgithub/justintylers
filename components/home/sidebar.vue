@@ -28,11 +28,11 @@ export default defineComponent({
       'relative flex-1 flex flex-col w-full': mode === 'mobile',
     }"
   >
-    <div class="flex-1 overflow-y-auto pl-4 lg:pl-0 pr-4 py-4">
+    <div class="flex-1 overflow-y-auto pl-4 lg:pl-0 pr-4 py-4 mt-9">
       <ul>
         <li v-for="i in menu_items" :key="i.name">
           <Anchor
-            :to="{ name: 'dashboard' }"
+            :to="{ name: i.page }"
             class="group flex items-center mb-4 hover:no-underline"
           >
             <div

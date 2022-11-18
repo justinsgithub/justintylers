@@ -1,26 +1,70 @@
 <script lang="ts" setup>
-
 useHead({
   title: 'Home'
 })
-
 </script>
 
 <template>
   <div class="flex-1 flex relative">
     <div class="flex-1 flex">
-      <section class="flex-1 flex">
-        <div class="flex-1 flex flex-col items-center z-10">
-          <h1 class="text-center mt-9 drop-shadow-xl text-5xl block">
+      <section class="flex-1 flex my-5 mb-15">
+        <div class="flex-1 flex flex-col items-center">
+          <h1 class="text-center drop-shadow-xl text-5xl block">
               Justin Angeles
           </h1>
-          <div class="flex space-x-4 mx-4 mt-10 justify-center max-w-lg">
-            <p class="card-content">
+
+          <img class="w-40 h-40 mt-9 rounded-full" src="/images/profile.jpg" alt="Picture of Justin Angeles" >
+
+          <div class="flex space-x-4 mx-4 my-10 justify-center">
               Thank you for taking the time to visit my site. Here you can find links to my various accounts and activites on the web. 😊
               <!--Also feel free to checkout my writings, please enjoy and any feedback is always appreciated 😊.-->
-            </p>
           </div>
+
+          <div class="p-4 my-9 pb-20px shadow-xl max-w-lg">
+            <div class="flex-col justify-center items-center flex-wrap w-full box-border">
+              <div class="mb-9">
+                <img src='/images/writings.png'>
+              </div>
+              <div class="my-9">
+                 I find writing very therapeutic and a great way to prevent building up too much negative energy.
+              </div>
+              <div class="mb-1">
+                <Button text="View Project" size="xs" class="font-extrabold capitalize" to="/writings" />
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 my-9 pb-20px shadow-xl max-w-lg">
+            <div class="flex-col justify-center items-center flex-wrap w-full box-border">
+              <div class="mb-9">
+                <img src='/images/learning-docs-cover.png'>
+              </div>
+              <div class="my-9">
+                  I created study docs to help learn and document things I learn about. It is pretty much entirely tech subjects.
+              </div>
+              <div class="mb-1">
+                <Button text="View Project" size="xs" class="font-extrabold capitalize" href="https://docs.justintylers.com" />
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 my-9 pb-20px shadow-xl max-w-lg">
+            <div class="flex-col justify-center items-center flex-wrap w-full box-border">
+              <div class="mb-9">
+                <img src='/images/portfolio-cover.png'>
+              </div>
+              <div class="my-9">
+                My software development portfolio
+              </div>
+              <div class="mb-1">
+              <Button text="View Project" size="xs" class="font-extrabold capitalize" href="https://docs.justintylers.com" />
+              </div>
+            </div>
+          </div>
+
+
         </div>
+
       </section>
     </div>
   </div>

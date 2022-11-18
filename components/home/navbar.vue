@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 export interface IMenuItem {
   type: 'link' | 'button'
   text: string
@@ -11,9 +10,8 @@ const navbar = ref(null)
 const showDrawer = useState<boolean>('navbar.showDrawer', () => false)
 const showOptions = useState<boolean>('navbar.showOptions', () => false)
 
-
 const menus = computed((): IMenuItem[] => [
-  { type: 'button', text: 'Writings', route: { name: 'writings' }, },
+  { type: 'button', text: 'Writings', route: { name: 'writings' } },
 ])
 
 // lifecycle
@@ -51,7 +49,7 @@ const toggleDrawer = () => (showDrawer.value = !showDrawer.value)
 </script>
 
 <template>
-  <div ref="navbar" class="backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 border-b border-gray-900/10 dark:border-gray-50/[0.2] bg-white/[0.5] dark:bg-slate-900/[0.5]" >
+  <div ref="navbar" class="backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 border-b border-gray-900/10 dark:border-gray-50/[0.2] bg-white/[0.5] dark:bg-cust/[0.5]">
     <div id="navbar-banner" class="banner">
       <div class="text-white text-xs text-center py-1 px-4 lg:px-8 bg-primary-500 capitalize" >
         <span class="mr-1">
@@ -62,45 +60,49 @@ const toggleDrawer = () => (showDrawer.value = !showDrawer.value)
     <div class="max-w-8xl w-full mx-auto">
       <div class="py-3 lg:px-8 mx-4 lg:mx-0">
         <div class="relative flex items-center">
+          <NuxtLink tag="a" class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-900 dark:text-gray-200" :to="{ name: 'index' }" >
+            <span class="sr-only">home</span>
+            <span class="flex items-center"> JustinTylers.com </span>
+          </NuxtLink>
 
-          <slot name="title">
-            <NuxtLink tag="a" class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-900 dark:text-gray-200" :to="{ name: 'index' }" >
-              <span class="sr-only">home</span>
-              <span class="flex items-center">
-                JustinTylers.com
-              </span>
-            </NuxtLink>
-          </slot>
-      <div class="relative hidden lg:flex items-center ml-auto">
-        <nav class="text-sm leading-6 font-semibold text-gray-600 dark:text-gray-300" role="navigation">
-          <ul class="flex items-center space-x-8">
-            <li v-for="(item, i) in menus" :key="i">
-              <Anchor
-                v-if="item.type === 'link'"
-                :to="item.route ? item.route : undefined"
-                :href="item.href ? item.href : undefined"
-                class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-                >{{ item.text }}</Anchor
-              >
-              <Button
-                v-else-if="item.type === 'button'"
-                :text="item.text"
-                size="xs"
-                class="font-extrabold capitalize"
-                :to="item.route ? item.route : undefined"
-                :href="item.href ? item.href : undefined"
-              />
-            </li>
-          </ul>
-        </nav>
-        <div class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]">
-          <ThemeSwitcher />
-        </div>
-      </div>
+          <div class="relative hidden lg:flex items-center ml-auto">
+            <nav class="text-sm leading-6 font-semibold text-gray-600 dark:text-gray-300" role="navigation" >
+              <ul class="flex items-center space-x-8">
+                <li v-for="(item, i) in menus" :key="i">
+                  <Anchor v-if="item.type === 'link'" :to="item.route ? item.route : undefined" :href="item.href ? item.href : undefined" class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize" >
+                    {{ item.text }}
+                  </Anchor>
+                  <Button v-else-if="item.type === 'button'" :text="item.text" size="xs" class="font-extrabold capitalize" :to="item.route ? item.route : undefined" :href="item.href ? item.href : undefined" />
+                </li>
+              </ul>
+            </nav>
+            <div class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]" >
+              <ThemeSwitcher />
+            </div>
+          </div>
+
+          <!-- <div class="relative flex items-center ml-auto lg:hidden"> -->
+          <!--   <nav class="text-sm leading-6 font-semibold text-gray-600 dark:text-gray-300" role="navigation" > -->
+          <!--     <ul class="flex items-center space-x-8"> -->
+          <!--       <li v-for="(item, i) in menus" :key="i"> -->
+          <!--         <Anchor v-if="item.type === 'link'" :to="item.route ? item.route : undefined" :href="item.href ? item.href : undefined" class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize" > -->
+          <!--           {{ item.text }} -->
+          <!--         </Anchor> -->
+          <!--         <Button v-else-if="item.type === 'button'" :text="item.text" size="xs" class="font-extrabold capitalize" :to="item.route ? item.route : undefined" :href="item.href ? item.href : undefined" /> -->
+          <!--       </li> -->
+          <!--     </ul> -->
+          <!--   </nav> -->
+          <!--   <div class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]" > -->
+          <!--     <ThemeSwitcher /> -->
+          <!--   </div> -->
+          <!-- </div> -->
 
           <div class="flex-1 flex justify-end lg:hidden">
-            <button class="flex items-center focus:outline-none" aria-label="Toggle Drawer Menu" @click="toggleDrawer()">
-              <span class="flex items-center text-gray-600 dark:text-gray-300 text-sm" aria-hidden="true">
+            <div class="flex space-x-4 border-r mr-4 pr-4 border-gray-900/10 dark:border-gray-50/[0.2]" >
+              <ThemeSwitcher />
+            </div>
+            <button class="flex items-center focus:outline-none" aria-label="Toggle Drawer Menu" @click="toggleDrawer()" >
+              <span class="flex items-center text-gray-600 dark:text-gray-300 text-sm" aria-hidden="true" >
                 <icon-uil:bars v-if="!showDrawer" />
                 <icon-uil:times v-else />
               </span>

@@ -1,11 +1,7 @@
-<script lang="ts" setup>
-/* definePageMeta({ */
-/*   layout: 'page', */
-/* }) */
-</script>
-
 <template>
   <PageWrapper class="flex flex-col">
-    <WritingsPost />
+    <pre>
+      <WritingsPost />
+  </pre>
   </PageWrapper>
 </template>

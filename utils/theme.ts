@@ -17,15 +17,11 @@ export function ThemeManager() {
   const themeUserSetting = useCookie<IThemeSettingOptions>('theme')
 
   // methods
-  const getUserSetting = (): IThemeSettingOptions =>
-    themeUserSetting.value || 'system'
+  const getUserSetting = (): IThemeSettingOptions => themeUserSetting.value || 'system'
+
   const getSystemTheme = (): ITheme => {
     try {
-      return window
-        ? window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light'
-        : 'dark'
+      return window ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : 'dark'
     } catch (error) {
       return 'dark'
     }
@@ -42,10 +38,10 @@ export function ThemeManager() {
     getUserSetting()
   )
   const themeCurrent = useState<ITheme>('theme.current', () =>
-    process.client ? getSystemTheme() : 'light'
+    process.client ? getSystemTheme() : 'dark'
   )
 
-  // wathcers
+  // watchers
   const onThemeSettingChange = (themeSetting: IThemeSettingOptions) => {
     themeUserSetting.value = themeSetting
     if (themeSetting === 'realtime') {

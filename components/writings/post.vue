@@ -6,9 +6,7 @@
       </PageHeader>
       <PageBody>
         <PageSection>
-          <pre>
             <ContentRenderer :value="doc" />
-          </pre>
         </PageSection>
       </PageBody>
     </template>
