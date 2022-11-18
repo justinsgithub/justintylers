@@ -29,7 +29,7 @@ const get_preview = (article: any) => article.excerpt.children.slice(0, article.
               </div>
               <div class="text-slate-700 dark:text-gray-300 mb-2 mt-2">
                 <div>
-                  <pre v-for="line in get_preview(article)">{{line}}</pre>
+                  <p v-for="line in get_preview(article)">{{line}}</p>
                 </div>
               </div>
               <div class="flex">

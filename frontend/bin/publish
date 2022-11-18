@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'mongoid'
+
+require 'fileutils'
+
+require_relative 'secrets'
+
+Mongoid.configure do |config|
+  config.clients.default = {
+    uri: MONGO_URI
+  }
+  config.log_level = :warn
+end
+
+class Writing
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  field :slug, type: String
+  field :content, type: String
+end
+
+def insert_id(path, id)
+  tempfile = File.open('file.tmp', 'w')
+  f = File.new(path)
+  f.each do |line|
+    tempfile << line
+    tempfile << "id: #{id}\n" if f.lineno == 1
+  end
+  f.close
+  tempfile.close
+  FileUtils.mv('file.tmp', path)
+end
+
+def update_writing(filename)
+  slug = filename.strip.gsub('.md', '')
+  writing = Writing.where(slug: slug).first
+  return if writing
+
+  path = "content/writings/#{filename}"
+  content = File.read(path)
+  insert_id(path, Writing.create!(slug: slug, content: content).id)
+end
+
+def publish_writings
+  files = Dir.entries('content/writings').select { |x| x.include? 'md' }
+  files.each do |file|
+    update_writing(file)
+  end
+end
+
+publish_writings

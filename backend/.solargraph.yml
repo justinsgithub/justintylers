@@ -1,0 +1,30 @@
+---
+include:
+- "**/*.rb"
+# - "lib/**/*.rb"
+# - "app/**/*.rb"
+# - "test/**/*.rb"
+# - "config/**/*.rb"
+# - "vendor/bundle/ruby/3.1.0/gems/mongoid-8.0.2/**/*.rb"
+# - "vendor/bundle/ruby/3.1.0/gems/rack-2.2.4/**/*.rb"
+# - "vendor/bundle/ruby/3.1.0/gems/rails-7.0.4/**/*.rb"
+# - "vendor/bundle/ruby/3.1.0/gems/rack-cors-1.1.1/**/*.rb"
+# - "vendor/bundle/ruby/3.1.0/gems/**/*.rb"
+exclude:
+- ".bundle/**/*"
+require: 
+# - "mongoid"
+- "rack-cors"
+domains: []
+reporters:
+- rubocop
+formatter:
+  rubocop:
+    cops: safe
+    except: []
+    only: []
+    extra_args: []
+require_paths: []
+plugins: 
+- "solargraph-rails"
+max_files: 5000

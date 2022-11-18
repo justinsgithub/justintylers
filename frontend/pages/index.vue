@@ -3,7 +3,6 @@ useHead({
   title: 'Home'
 })
 </script>
-
 <template>
   <div class="flex-1 flex relative">
     <div class="flex-1 flex">
@@ -12,11 +11,10 @@ useHead({
           <h1 class="text-center drop-shadow-xl text-5xl block">
               Justin Angeles
           </h1>
-
           <img class="w-40 h-40 mt-9 rounded-full" src="/images/profile.jpg" alt="Picture of Justin Angeles" >
 
           <div class="flex space-x-4 mx-4 my-10 justify-center">
-              Thank you for taking the time to visit my site. Here you can find links to my various accounts and activites on the web. 😊
+              Thank you for taking the time to visit my site. Here you can find links to my various accounts and activities on the web. 😊
               <!--Also feel free to checkout my writings, please enjoy and any feedback is always appreciated 😊.-->
           </div>
 
