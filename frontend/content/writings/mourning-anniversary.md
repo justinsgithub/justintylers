@@ -4,7 +4,6 @@ title: Mourning Anniversary
 ---
 
 
-
 Happy anniversary 
 
 Passed away 5 years ago today 
@@ -12,8 +11,6 @@ Passed away 5 years ago today
 On my way to work this morning 
 
 Feeling like it was yesterday 
-
-
 
 ---
 

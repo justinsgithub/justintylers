@@ -8,14 +8,9 @@ class ApplicationController < ActionController::API
 
   def reload_user
     @current_user.reload
-    assign_likes
   end
 
   private
-
-  def assign_likes
-    @current_user[:likes] = @current_user.likes || []
-  end
 
   def set_current_user
     session[:id] && (@current_user = SiteUser.find(session[:id]))

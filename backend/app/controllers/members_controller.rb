@@ -6,7 +6,7 @@ class MembersController < ApplicationController
 
   # GET /members
   def index
-    @members = Member.all
+    @members = Member.limit(5)
 
     render json: @members
   end

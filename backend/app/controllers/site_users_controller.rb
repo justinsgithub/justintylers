@@ -6,7 +6,6 @@ class SiteUsersController < ApplicationController
 
   # GET /site_users
   def index
-    @current_user.xlikes
     render json: @current_user
   end
 

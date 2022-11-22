@@ -7,5 +7,5 @@ class SiteUser
   field :password, type: String
   field :username, type: String
   field :guest, type: Boolean, default: true
-  has_many :likes, dependent: :destroy
+  has_many :writing_likes
 end
