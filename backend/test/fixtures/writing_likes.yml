@@ -1,9 +1,0 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  site_user: one
-  writing: one
-
-two:
-  site_user: two
-  writing: two
