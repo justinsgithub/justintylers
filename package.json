@@ -68,11 +68,5 @@
       "pnpm lintfix"
     ]
   },
-  "packageManager": "yarn@3.3.0",
-  "pnpm": {
-    "patchedDependencies": {
-      "unstorage@1.0.1": "patches/unstorage@1.0.1.patch",
-      "unstorage@0.6.0": "patches/unstorage@0.6.0.patch"
-    }
-  }
+  "packageManager": "yarn@3.3.0"
 }
