@@ -6,23 +6,18 @@ export interface IMenuItem {
   route?: any
 }
 
-const { t } = useLang()
 const app = useAppConfig()
 const menus = computed((): IMenuItem[] => [
   {
     type: 'link',
-    text: t('pages.getting-started.nav'),
+    text: 'Getting started',
     route: { name: 'getting-started' },
   },
-  { type: 'link', text: t('pages.blank.nav'), route: { name: 'blank' } },
-  { type: 'link', text: t('pages.test.nav'), route: { name: 'test' } },
-  { type: 'link', text: t('pages.post.nav'), route: { name: 'post' } },
-  { type: 'link', text: t('pages.setting.nav'), route: { name: 'setting' } },
-  {
-    type: 'button',
-    text: t('pages.dashboard.nav'),
-    route: { name: 'dashboard' },
-  },
+  { type: 'link', text: 'pages.blank.nav', route: { name: 'blank' } },
+  { type: 'link', text: 'pages.test.nav', route: { name: 'test' } },
+  { type: 'link', text: 'pages.post.nav', route: { name: 'post' } },
+  { type: 'link', text: 'pages.setting.nav', route: { name: 'setting' } },
+  { type: 'button', text: 'pages.dashboard.nav', route: { name: 'dashboard' }, },
 ])
 </script>
 
@@ -66,10 +61,7 @@ const menus = computed((): IMenuItem[] => [
             </li>
           </ul>
         </nav>
-        <div
-          class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]"
-        >
-          <LanguageSwitcher />
+        <div class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]" >
           <ThemeSwitcher />
           <Anchor
             class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
@@ -115,16 +107,13 @@ const menus = computed((): IMenuItem[] => [
             </ul>
           </nav>
           <div class="mt-6 text-sm font-bold capitalize">
-            {{ $t('components.theme_switcher.change_theme') }}
+            change theme
           </div>
           <div class="mt-2">
             <ThemeSwitcher type="select-box" />
           </div>
           <div class="mt-6 text-sm font-bold capitalize">
-            {{ $t('components.language_switcher.change_language') }}
-          </div>
-          <div class="mt-2">
-            <LanguageSwitcher type="select-box" />
+            change language
           </div>
         </ActionSheetBody>
         <Button type="secondary" title="Github" href="https://github.com/viandwi24/nuxt3-awesome-starter">

@@ -1,11 +1,10 @@
 export type IThemeSettingOptions = 'dark' | 'light' | 'system' | 'realtime'
 
+export type IThemeSettingText = 'Dark' | 'Light' | 'System' | 'Realtime'
+
 export type ITheme = 'dark' | 'light'
 
-export const availableThemes: {
-  key: IThemeSettingOptions
-  text: string
-}[] = [
+export const availableThemes: { key: IThemeSettingOptions; text: IThemeSettingText }[] = [
   { key: 'light', text: 'Light' },
   { key: 'dark', text: 'Dark' },
   { key: 'system', text: 'System' },
@@ -21,7 +20,11 @@ export function ThemeManager() {
 
   const getSystemTheme = (): ITheme => {
     try {
-      return window ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : 'dark'
+      return window
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light'
+        : 'dark'
     } catch (error) {
       return 'dark'
     }
@@ -89,7 +92,6 @@ export function ThemeManager() {
   return {
     themeSetting,
     themeCurrent,
-
     getUserSetting,
     getSystemTheme,
     getRealtimeTheme,

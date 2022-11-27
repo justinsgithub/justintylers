@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 // composable
-const { t } = useLang()
 
 // meta
 definePageMeta({
@@ -8,7 +7,8 @@ definePageMeta({
 })
 
 // vars
-const titlesText = computed<string[]>(() => t('pages.index.title').split('[]'))
+const titlesText = 'Example'
+
 const leadingsText = computed(() => [
   {
     text: titlesText.value[0],

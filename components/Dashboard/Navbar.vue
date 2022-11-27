@@ -12,7 +12,6 @@
           <IconUil:angle-down />
         </div>
         <div class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]">
-          <LanguageSwitcher />
           <ThemeSwitcher />
           <Anchor
             class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
@@ -29,16 +28,10 @@
         <ActionSheetBody>
           <ActionSheetHeader text="Menu" />
           <div class="mt-6 text-sm font-bold capitalize">
-            {{ $t('components.theme_switcher.change_theme') }}
-          </div>
-          <div class="mt-2">
-            <ThemeSwitcher type="select-box" />
+            change theme
           </div>
           <div class="mt-6 text-sm font-bold capitalize">
-            {{ $t('components.language_switcher.change_language') }}
-          </div>
-          <div class="mt-2">
-            <LanguageSwitcher type="select-box" />
+            change language
           </div>
         </ActionSheetBody>
         <Button type="secondary" title="Github" href="https://github.com/viandwi24/nuxt3-awesome-starter">

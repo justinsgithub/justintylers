@@ -2,18 +2,17 @@
 import { capitalize } from '~/utils/str'
 
 // composable
-const { t } = useLang()
 
 // compiler macro
 definePageMeta({
   layout: 'page',
 })
 useHead(() => ({
-  title: capitalize(t('pages.post.title')),
+  title: 'pages post title',
   meta: [
     {
       name: 'description',
-      content: t('pages.post.description'),
+      content: 'pages post description',
     },
   ],
 }))
@@ -22,7 +21,7 @@ useHead(() => ({
 <template>
   <PageWrapper>
     <PageHeader>
-      <PageTitle :text="$t('pages.post.title')" class="capitalize" />
+      <PageTitle text="pages post title" class="capitalize" />
     </PageHeader>
     <PageBody>
       <ContentList v-slot="{ list }" path="/post">
@@ -54,7 +53,7 @@ useHead(() => ({
                   class="text-sm flex space-x-1 items-center text-primary-500"
                   :to="article._path"
                 >
-                  <span>{{ $t('others.learn_more') }}</span>
+                  <span>others learn more</span>
                   <icon:ic:baseline-arrow-right-alt class="text-sm" />
                 </Anchor>
               </div>

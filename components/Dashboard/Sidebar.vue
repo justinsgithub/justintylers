@@ -48,13 +48,8 @@ export default defineComponent({
             >
               <IconUil:apps class="text-xs" />
             </div>
-            <span
-              class="text-sm font-semibold capitalize"
-              :class="{
-                'font-extrabold text-sky-500 dark:text-sky-400': i === 1,
-              }"
-            >
-              {{ $t('pages.dashboard.index.nav') }}
+            <span class="text-sm font-semibold capitalize" :class="{ 'font-extrabold text-sky-500 dark:text-sky-400': i === 1, }" >
+              dashboard index nav
             </span>
           </Anchor>
         </li>

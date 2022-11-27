@@ -30,11 +30,11 @@ const currentStyle = toRef(props, 'type')
       class="relative flex items-center"
     >
       <ListboxLabel class="sr-only">
-        {{ $t('components.theme_switcher.theme') }}
+        {{theme.setting}}
       </ListboxLabel>
       <ListboxButton
         type="button"
-        :title="$t('components.theme_switcher.change_theme')"
+        title="change theme"
         class="transition-colors duration-300"
       >
         <span class="flex justify-center items-center dark:hidden">

@@ -3,7 +3,6 @@ import { AppSetup } from './utils/app'
 import { ITheme } from './utils/theme'
 AppSetup()
 const theme = useState<ITheme>('theme.current')
-const locale = useState<string>('locale.setting')
 const app = useAppConfig()
 
 useHead({
@@ -19,6 +18,18 @@ useHead({
 })
 
 const get_current_user = async () => {
+  try {
+    const response = await fetch('/api/user', {
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+    const data = await response.json()
+    console.log(data)
+  } catch (error) {
+    console.error(error)
+  }
   // fetch username from github api
   /* try { */
   /*   const response = await fetch(`http://localhost:3000/site_users`, { */
@@ -43,7 +54,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Html :class="`${theme === 'dark' ? 'dark' : ''}`" :lang="locale">
+  <Html :class="`${theme === 'dark' ? 'dark' : ''}`">
     <Body
       class="antialiased duration-300 transition-colors text-gray-800 dark:text-gray-200 bg-white dark:bg-cust"
     >

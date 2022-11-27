@@ -10,6 +10,18 @@ declare module '@nuxt/schema' {
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    runtime_config: {
+      mongo_uri: process.env.MONGO_URI
+    } 
+  },
+  nitro: {
+    plugins: [
+      "~/server/index.ts"
+    ]
+
+  },
+
   // server side rendering mode
   ssr: true,
 

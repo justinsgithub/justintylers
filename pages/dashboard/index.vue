@@ -7,7 +7,7 @@ definePageMeta({
 <template>
   <PageWrapper>
     <PageHeader>
-      <PageTitle :text="$t('pages.dashboard.index.title')" class="capitalize" />
+      <PageTitle text="dashboard title" class="capitalize" />
     </PageHeader>
     <PageBody>
       <PageSection>
@@ -19,7 +19,7 @@ definePageMeta({
       </PageSection>
       <PageSection>
         <div v-for="i in 30" :key="i" class="text-6xl uppercase">
-          {{ $t('pages.blank.just_blank_page_with_title') }}
+          just blank page with title
         </div>
       </PageSection>
     </PageBody>
