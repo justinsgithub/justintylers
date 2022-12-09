@@ -1,10 +1,8 @@
 import { z } from "zod";
 
-import { setCookie } from "@/utils/set-cookie";
-
 import { router, publicProcedure } from "../trpc";
 
-export const exampleRouter = router({
+export const user_router = router({
   hello: publicProcedure
     .input(z.object({ text: z.string().nullish() }).nullish())
     .query(({ input }) => {
@@ -12,9 +10,11 @@ export const exampleRouter = router({
         greeting: `Hello ${input?.text ?? "world"}`,
       };
     }),
+  create_guest: publicProcedure.mutation(({ ctx }) => {
+    return ctx.prisma.example.findMany();
+  }),
   getAll: publicProcedure.query(({ ctx }) => {
-    setCookie(ctx.res, 'Justins Cookie!', 'api-middleware!', { path: '/', maxAge: 2592000 })
-    console.log('GETALL COOKIES', ctx.req.cookies)
     return ctx.prisma.example.findMany();
   }),
 });
+

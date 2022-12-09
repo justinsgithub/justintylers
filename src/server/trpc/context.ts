@@ -1,12 +1,28 @@
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
+import { serialize, CookieSerializeOptions } from 'cookie'
+import { NextApiResponse, NextApiRequest } from 'next'
+
 
 import { getServerAuthSession } from "../common/get-server-auth-session";
 import { prisma } from "../db/client";
 
+const setCookie = ( res: NextApiResponse, name: string, value: unknown, options: CookieSerializeOptions = {}) => {
+  const stringValue =
+    typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
+
+  if (typeof options.maxAge === 'number') {
+    options.expires = new Date(Date.now() + options.maxAge * 1000)
+  }
+
+  res.setHeader('Set-Cookie', serialize(name, stringValue, options))
+}
+
 type CreateContextOptions = {
   session: Session | null;
+  req: NextApiRequest 
+  res: NextApiResponse 
 };
 
 /** Use this helper for:
@@ -18,6 +34,8 @@ export const createContextInner = async (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
+    req: opts.req,
+    res: opts.res
   };
 };
 
@@ -26,6 +44,8 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (opts: CreateNextContextOptions) => {
+  /* setCookie(opts.res, 'Next.js', 'api-middleware!', { path: '/', maxAge: 2592000 }) */
+  /* console.log('COOKIES', opts.req.cookies) */
   const { req, res } = opts;
 
   // Get the session from the server using the unstable_getServerSession wrapper function
@@ -33,6 +53,8 @@ export const createContext = async (opts: CreateNextContextOptions) => {
 
   return await createContextInner({
     session,
+    req,
+    res
   });
 };
 
