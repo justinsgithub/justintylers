@@ -6,12 +6,12 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { Button } from '@/components/button'
 
 import { trpc } from '../utils/trpc'
+import { useTheme } from '@/components/theme'
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: 'from tRPC' })
-  const { data: sessionData } = useSession();
+  /* const hello = trpc.example.hello.useQuery({ text: 'from tRPC' }) */
 
-  console.log('SESSION DATA', sessionData)
+  const theme = useTheme()
 
   return (
     <>
@@ -25,9 +25,6 @@ const Home: NextPage = () => {
           <div className='flex flex-1'>
             <section className='mb-15 my-5 flex flex-1'>
               <div className='flex flex-1 flex-col items-center'>
-                <h1 className='block text-center text-5xl drop-shadow-xl mb-5'>
-                  USER:  {sessionData && sessionData.user?.name}
-                </h1>
                 <h1 className='block text-center text-5xl drop-shadow-xl'>
                   Justin Angeles
                 </h1>

@@ -6,6 +6,7 @@ import { get_all_writings, get_writing_by_slug } from '@/utils/get-writings'
 import { markdown_to_html } from '@/utils/markdown_html'
 import { IWriting } from '@/types/writing'
 import markdown_styles from '@/styles/markdown.module.css'
+import { useSession } from 'next-auth/react'
 
 type Params = {
   params: {
@@ -60,9 +61,12 @@ interface IProps {
 const WritingPage: NextPage<IProps> = (props) => {
   const router = useRouter()
 
+  const session = useSession()
+
   if (!router.isFallback && !props.writing?.slug) {
     return <ErrorPage statusCode={404} />
   }
+
 
   return (
     <Layout>

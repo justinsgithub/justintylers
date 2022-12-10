@@ -2,15 +2,14 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useUser } from "@/hooks/user"
 
 import { trpc } from "../utils/trpc";
 import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
   const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-  const examples = trpc.example.getAll.useQuery();
-  console.log('EXAMPLES', examples.data)
+  /* const examples = trpc.example.getAll.useQuery(); */
+  /* console.log('EXAMPLES', examples.data) */
 
   return (
     <>
@@ -58,33 +57,27 @@ const Home: NextPage = () => {
 export default Home;
 
 const AuthShowcase: React.FC = () => {
-  const user = useUser();
+  const session = useSession();
 
-  const [test, setTest] = useState(false)
-
-  console.log('USER', user)
-  console.log('TEST', test)
-  
-  useEffect(() => {
-    setTest(true)
-  }, [])
+  /* console.log('USER', user) */
+  /* console.log('TEST', test) */
 
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: user !== undefined },
+    { enabled: session?.data !== undefined },
   );
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <p className="text-center text-2xl text-white">
-        {user && <span>Logged in as {user?.name}</span>}
+        {session?.data && <span>Logged in as {session?.data?.user?.name}</span>}
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={user ? () => signOut() : () => signIn()}
+        onClick={session?.data?.user ? () => signOut() : () => signIn()}
       >
-        {user ? "Sign out" : "Sign in"}
+        {session?.data?.user ? "Sign out" : "Sign in"}
       </button>
     </div>
   );

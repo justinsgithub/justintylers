@@ -3,6 +3,7 @@ import { Layout } from "@/components/layout";
 import { WritingPreview } from "@/components/writings/preview";
 import { get_all_writings } from "@/utils/get-writings";
 import { IWriting } from "@/types/writing";
+import { useTheme } from "@/components/theme";
 
 interface IProps {
   all_writings: IWriting[]
@@ -27,7 +28,6 @@ export const getStaticProps = async () => {
 
 
 const WritingsPage: NextPage<IProps> = (props) => {
-
   return (
     <Layout>
       <div className="flex-1 relative py-8">

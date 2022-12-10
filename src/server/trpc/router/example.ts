@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { setCookie } from "@/utils/set-cookie";
+import { set_cookie } from "@/utils/set-cookie";
 
 import { router, publicProcedure } from "../trpc";
 
@@ -13,7 +13,7 @@ export const exampleRouter = router({
       };
     }),
   getAll: publicProcedure.query(({ ctx }) => {
-    setCookie(ctx.res, 'Justins Cookie!', 'api-middleware!', { path: '/', maxAge: 2592000 })
+    set_cookie(ctx.res, 'Justins Cookie!', 'api-middleware!', { path: '/', maxAge: 2592000 })
     console.log('GETALL COOKIES', ctx.req.cookies)
     return ctx.prisma.example.findMany();
   }),
