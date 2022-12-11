@@ -23,7 +23,7 @@ model Example {
 // Necessary for Next auth
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  user_id            String
+  user_id           String
   type              String
   provider          String
   providerAccountId String
@@ -43,7 +43,7 @@ model Account {
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  user_id       String
+  user_id      String
   expires      DateTime
   user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
@@ -51,19 +51,19 @@ model Session {
 }
 
 model WritingLike {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  user_id String
-  user   User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  user_id    String
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   writing_id String
-  writing   Writing   @relation(fields: [writing_id], references: [id], onDelete: Cascade)
+  writing    Writing @relation(fields: [writing_id], references: [id], onDelete: Cascade)
 
   @@map("writing_likes")
 }
 
 model User {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?        @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -74,8 +74,8 @@ model User {
 }
 
 model Writing {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  slug String
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  slug          String
   writing_likes WritingLike[]
 
   @@map("writings")

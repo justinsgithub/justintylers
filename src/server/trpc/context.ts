@@ -21,8 +21,8 @@ const setCookie = ( res: NextApiResponse, name: string, value: unknown, options:
 
 type CreateContextOptions = {
   session: Session | null;
-  req: NextApiRequest 
-  res: NextApiResponse 
+  req: NextApiRequest | null
+  res: NextApiResponse | null
 };
 
 /** Use this helper for:
