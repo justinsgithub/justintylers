@@ -32,6 +32,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }: Params) => {
   const writing = get_writing_by_slug(params.slug, [
     'title',
+    'id',
     /* 'date', */
     'slug',
     /* 'author', */

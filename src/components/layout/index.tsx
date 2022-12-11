@@ -22,18 +22,12 @@ export const Layout: FC<ILayoutProps> = ({ children }) => {
         <div className='flex min-h-screen flex-col'>
           <Navbar showDrawer={showDrawer} toggleDrawer={toggleDrawer} />
           <div className='flex w-full flex-1 flex-col'>
-            <main className='max-w-8xl relative mx-auto flex h-full w-full flex-1 flex-col'>
-              {children}
-            </main>
-          </div>{' '}
+            <main className='max-w-8xl relative mx-auto flex h-full w-full flex-1 flex-col'>{children}</main>
+          </div>
           <footer className='fixed inset-x-0 bottom-0 z-40 border-t bg-white/[0.5] dark:border-gray-50/[0.2] dark:bg-cust/[0.7] lg:border-gray-900/10'>
-            {' '}
             <section className='max-w-8xl mx-auto flex w-full flex-1 space-x-20 px-4 lg:px-8'>
-              {' '}
               <div className='w-full pt-1 md:py-2'>
-                {' '}
                 <div className='flex justify-evenly'>
-                  {' '}
                   <a href='https://twitter.com/JustinTAngeles'>
                     <FaTwitter className='text-blue-600' />
                   </a>

@@ -44,3 +44,4 @@ selenium-user
 selenium
 vendor
 .bundle/cache
+.old
