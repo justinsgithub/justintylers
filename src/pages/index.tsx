@@ -1,93 +1,68 @@
+import { FC } from 'react'
 import { NextPage } from 'next'
 import { Layout } from '@/components/layout'
 import Head from 'next/head'
-import Link from 'next/link'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { Button } from '@/components/button'
-
 import { trpc } from '../utils/trpc'
 import { useTheme } from '@/components/theme'
+import { Link } from '@/components/link'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+
+interface IHomeCard {
+    title: string
+    description: string
+    href: string
+    button_text: string
+}
+const HomeCard: FC<IHomeCard> = (props) => {
+    return (
+        <Box mx='auto' my={3}>
+            <Card sx={{ maxWidth: 345, mx: 'auto' }}>
+                <CardContent>
+                    <Typography gutterBottom variant='h5' component='div'>
+                        {props.title}
+                    </Typography>
+                    <Typography variant='body2' color='text.secondary'>
+                        {props.description}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Link href={props.href} underline='none'>
+                        <Button size='small'>{props.button_text}</Button>
+                    </Link>
+                </CardActions>
+            </Card>
+        </Box>
+    )
+}
 
 const Home: NextPage = () => {
-  /* const hello = trpc.example.hello.useQuery({ text: 'from tRPC' }) */
+    /* const hello = trpc.example.hello.useQuery({ text: 'from tRPC' }) */
 
-  const theme = useTheme()
+    const theme = useTheme()
 
-  return (
-    <>
-      <Head>
-        <title>Home - Justin T. Angeles</title>
-        <meta name='description' content='Justin Angeles personal site, writings, software, content' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-      <Layout>
-        <div className='relative flex flex-1'>
-          <div className='flex flex-1'>
-            <section className='mb-15 my-5 flex flex-1'>
-              <div className='flex flex-1 flex-col items-center'>
-                <h1 className='block text-center text-5xl drop-shadow-xl'>
-                  Justin Angeles
-                </h1>
-                <img className='mt-9 h-40 w-40 rounded-full' src='/images/profile.jpg' alt='Picture of Justin Angeles'
-                />
-
-                <div className='mx-4 my-10 flex justify-center space-x-4'>
-                  Thank you for taking the time to visit my site. Here you can
-                  find links to my various accounts and activities on the web.
-                  😊
-                  {/* Also feel free to checkout my writings, please enjoy and any feedback is always appreciated 😊. */}
-                </div>
-
-                <div className='pb-20px my-9 max-w-lg p-4 shadow-xl'>
-                  <div className='box-border w-full flex-col flex-wrap items-center justify-center'>
-                    <div className='mb-9'>
-                      <img src='/images/writings.png' />
-                    </div>
-                    <div className='my-9'>
-                      I find writing very therapeutic and a great way to prevent
-                      building up too much negative energy.
-                    </div>
-                    <div className='mb-1'>
-                      <Button text='View Project' size='xs' classes='font-extrabold capitalize' to='/writings' type='primary' />
-                    </div>
-                  </div>
-                </div>
-
-                <div className='pb-20px my-9 max-w-lg p-4 shadow-xl'>
-                  <div className='box-border w-full flex-col flex-wrap items-center justify-center'>
-                    <div className='mb-9'>
-                      <img src='/images/learning-docs-cover.png' />
-                    </div>
-                    <div className='my-9'>
-                      I created study docs to help learn and document things I
-                      learn about. It is pretty much entirely tech subjects.
-                    </div>
-                    <div className='mb-1'>
-                      <Button text='View Project' size='xs' classes='font-extrabold capitalize' href='https://docs.justintylers.com' type='primary' />
-                    </div>
-                  </div>
-                </div>
-
-                <div className='pb-20px my-9 max-w-lg p-4 shadow-xl'>
-                  <div className='box-border w-full flex-col flex-wrap items-center justify-center'>
-                    <div className='mb-9'>
-                      <img src='/images/portfolio-cover.png' />
-                    </div>
-                    <div className='my-9'>
-                      My software development portfolio
-                    </div>
-                    <div className='mb-1'>
-                      <Button text='View Project' size='xs' classes='font-extrabold capitalize' href='https://docs.justintylers.com' type='primary'/>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </Layout>
-    </>
-  )
+    return (
+        <>
+            <Head>
+                <title>Simple Health & Wellness - Justin T. Angeles</title>
+                <meta name='description' content='Health, wellness, and fitness' />
+                <link rel='icon' href='/favicon.ico' />
+            </Head>
+            <Layout>
+                <Box mx={1}>
+                    <Typography variant='h3' component='h1' mt={3} textAlign='center'>
+                        Simple Health & Wellness
+                    </Typography>
+                    <HomeCard title='Daily workout' description='Simple & effective gym routines posted daily' href='/daily-workouts' button_text='view workouts'/>
+                </Box>
+            </Layout>
+        </>
+    )
 }
 
 export default Home

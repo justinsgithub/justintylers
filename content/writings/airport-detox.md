@@ -1,7 +1,5 @@
 ---
 id: 63955b0105535fea2e5fcb8e
-id: 6395582f05535fd5a1d9136b
-id: 6373173a870f49ae24f646a1
 title: Airport Detox
 ---
 
@@ -11,10 +9,9 @@ Taking a flight out of state
 
 Debated taking my drugs with me
 
-That might lead to a bad fate
+That might lead to a worse fate
 
 I better let them stay
-
 
 ---
 
@@ -22,9 +19,9 @@ I almost missed the flight
 
 Partied with my girl all night
 
-Didn't want leave her at home
+Didn't want to leave her at home
 
-Sad thoughts circling round the dome
+Sad thoughts circling the dome
 
 I feel the break up coming soon 
 
@@ -52,7 +49,7 @@ It's been quite a minute
 
 I wonder just how bad I look
 
-Swear people are looking at me
+Swear people are staring at me
 
 Maybe i'm just being paranoid 
 

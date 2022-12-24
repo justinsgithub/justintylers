@@ -1,7 +1,5 @@
 ---
 id: 63955b0105535fea2e5fcb87
-id: 6395582e05535fd5a1d91364
-id: 638d6e6b05535f68021883b8
 title: Shave My Head 
 ---
 

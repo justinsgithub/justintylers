@@ -1,7 +1,7 @@
 import { createProxySSGHelpers } from '@trpc/react-query/ssg'
-import { NextPage, GetStaticPaths, GetServerSideProps, GetStaticPropsContext, InferGetStaticPropsType  } from 'next'
+import { NextPage, GetStaticPaths, GetServerSideProps, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import { prisma } from '@/server/db/client'
-import superjson from 'superjson';
+import superjson from 'superjson'
 import { appRouter } from '@/server/trpc/router/_app'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
@@ -12,7 +12,7 @@ import { type IWriting } from '@/types/writing'
 import markdown_styles from '@/styles/markdown.module.css'
 import { useSession } from 'next-auth/react'
 import { createContextInner } from '@/server/trpc/context'
-import { trpc } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc'
 
 type Params = {
   params: {
@@ -43,13 +43,15 @@ export const getStaticProps = async (context: GetStaticPropsContext<{ slug: stri
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: {
-      prisma, session, req, res
+      prisma,
+      session,
+      req,
+      res,
     },
-    transformer: superjson
+    transformer: superjson,
   })
 
-  const slug = context.params?.slug as string;
-  
+  const slug = context.params?.slug as string
 
   const writing = get_writing_by_slug(slug, [
     'title',
@@ -61,14 +63,14 @@ export const getStaticProps = async (context: GetStaticPropsContext<{ slug: stri
     /* 'ogImage', */
     /* 'coverImage', */
   ])
-  
+
   const { id, title } = writing
 
   const writing_content = writing.content as string
 
   const content = await markdown_to_html(writing_content || '')
 
-  const test = await ssg.writing.by_slug.prefetch({slug})
+  const test = await ssg.writing.by_slug.prefetch({ slug })
 
   console.log('SSG WRITING', test)
 
@@ -99,7 +101,11 @@ const WritingPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (p
 
   if (writing_query.status !== 'success') {
     // won't happen since if using `fallback: "blocking"`
-    return <Layout><h1>Loading...</h1></Layout>
+    return (
+      <Layout>
+        <h1>Loading...</h1>
+      </Layout>
+    )
   }
 
   const { data } = writing_query
@@ -115,16 +121,17 @@ const WritingPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (p
       {router?.isFallback ? (
         <h1>Loading...</h1>
       ) : (
-        <div className='relative flex-1 py-8'>
-          <div className='mb-6 px-4 lg:px-8'>
-            <div className='text-4xl font-bold capitalize'>
-              {props.writing.title}
+        <div className='relative mx-auto max-w-6xl flex-1 py-8'>
+          <div className='card w-96 bg-base-100 shadow-xl'>
+            <div className='card-body'>
+              <h1 className='card-title'>
+                {props.writing.title}
+                <div className='badge-scondary badge'>Like</div>
+              </h1>
+                <section>
+                  <article className={markdown_styles['markdown']} dangerouslySetInnerHTML={{ __html: props.writing.content }} />
+                </section>
             </div>
-          </div>
-          <div>
-            <section className='mb-6 px-4 lg:px-8'>
-                <article className={markdown_styles['markdown']} dangerouslySetInnerHTML={{__html: props.writing.content}}/>
-            </section>
           </div>
         </div>
       )}

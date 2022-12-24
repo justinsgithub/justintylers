@@ -1,7 +1,5 @@
 ---
 id: 63955b0105535fea2e5fcb8b
-id: 6395582f05535fd5a1d91368
-id: 6373173a870f49ae24f646a9
 title: Ashamed
 ---
 
