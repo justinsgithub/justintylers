@@ -1,5 +1,6 @@
-Can’t Be Friends 
-By Justin Tyler
+---
+title: Can’t Be Friends 
+---
 
 All of my writings
 http://www.JustinTylers.com

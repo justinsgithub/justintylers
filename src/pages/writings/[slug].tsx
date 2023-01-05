@@ -55,7 +55,7 @@ export const getStaticProps = async (context: GetStaticPropsContext<{ slug: stri
 
   const writing = get_writing_by_slug(slug, [
     'title',
-    'id',
+    /* 'id', */
     /* 'date', */
     'slug',
     /* 'author', */
@@ -64,7 +64,7 @@ export const getStaticProps = async (context: GetStaticPropsContext<{ slug: stri
     /* 'coverImage', */
   ])
 
-  const { id, title } = writing
+  const { title } = writing
 
   const writing_content = writing.content as string
 
@@ -82,7 +82,6 @@ export const getStaticProps = async (context: GetStaticPropsContext<{ slug: stri
     props: {
       writing: {
         content,
-        id,
         slug,
         title,
       },
@@ -96,7 +95,9 @@ const WritingPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (p
   const session = useSession()
 
   const slug = props.writing.slug
+
   /* const writing_query = trpc.post.byId.useQuery({ id }); */
+
   const writing_query = trpc.writing.by_slug.useQuery({ slug })
 
   if (writing_query.status !== 'success') {
