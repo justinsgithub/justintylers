@@ -1,5 +1,4 @@
 ---
-id: 63955b0105535fea2e5fcb8e
 title: Airport Detox
 ---
 
@@ -89,7 +88,7 @@ I just don't want to feel or think
 
 Grab alcohol as soon as I land
 
-A bandaid for the withdrawals
+A band aid for the withdrawals
 
 Feel like I forgot everything
 
@@ -97,11 +96,9 @@ Going through my phone
 
 Trying to remember me 
 
-My girl is trippin out
+My girl is tripping out
 
 Says she's dying missing me
-
-
 
 ---
 

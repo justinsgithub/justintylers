@@ -1,5 +1,4 @@
 ---
-id: 63955b0105535fea2e5fcb85
 title: Her Validation
 ---
 
@@ -65,7 +64,7 @@ Time to kick me out
 
 Finally had our last heartbreak
 
-it tastes so damn bittersweet
+It tastes so damn bittersweet
 
 I never hear from you now 
 

@@ -1,10 +1,9 @@
+/* import { signIn, signOut, useSession } from 'next-auth/react' */
+/* import { trpc } from '../utils/trpc' */
 import { FC } from 'react'
 import { NextPage } from 'next'
 import { Layout } from '@/components/layout'
 import Head from 'next/head'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import { trpc } from '../utils/trpc'
-import { useTheme } from '@/components/theme'
 import { Link } from '@/components/link'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -19,6 +18,7 @@ interface IHomeCard {
     href: string
     button_text: string
 }
+
 const HomeCard: FC<IHomeCard> = (props) => {
     return (
         <Box mx='auto' my={3}>
@@ -44,21 +44,21 @@ const HomeCard: FC<IHomeCard> = (props) => {
 const Home: NextPage = () => {
     /* const hello = trpc.example.hello.useQuery({ text: 'from tRPC' }) */
 
-    const theme = useTheme()
+    const rw_desc = 'A collection of writing that I did while recovering from crystal meth addiction.'
 
     return (
         <>
             <Head>
-                <title>Simple Health & Wellness - Justin T. Angeles</title>
+                <title>Writings Health & Wellness - Justin T. Angeles</title>
                 <meta name='description' content='Health, wellness, and fitness' />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
             <Layout>
                 <Box mx={1}>
                     <Typography variant='h3' component='h1' mt={3} textAlign='center'>
-                        Simple Health & Wellness
+                        Writings, Health & Wellness
                     </Typography>
-                    <HomeCard title='Daily workout' description='Simple & effective gym routines posted daily' href='/daily-workouts' button_text='view workouts'/>
+                    <HomeCard title='Recovery Writings' description={rw_desc} href='/writings' button_text='view writings'/>
                 </Box>
             </Layout>
         </>

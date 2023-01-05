@@ -1,5 +1,4 @@
 ---
-id: 63955b0105535fea2e5fcb86
 title: Mourning Anniversary 
 ---
 
@@ -68,7 +67,7 @@ You wanted to be just like me
 
 Ambitious competitors 
 
-With vicious but calm tempers  
+With vicious but calm tempers
 
 Almost killed each other sometimes 
 

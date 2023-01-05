@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
 import { ThemeProvider } from '@mui/material/styles'
@@ -11,7 +10,6 @@ import theme from '@/utils/theme'
 import createEmotionCache from '@/utils/createEmotionCache'
 import { trpc } from '../utils/trpc'
 
-/* import '../styles/globals.css' */
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
