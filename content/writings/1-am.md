@@ -20,8 +20,6 @@ Cause my mind just won’t shut off
 
 Wonder why I think so much 
 
-
-
 ---
 
 Technically it’s morning time 
@@ -31,8 +29,6 @@ Maybe I’m just missing you
 Missing my family too 
 
 Just had a dream about them 
-
-
 
 ---
 
@@ -44,8 +40,6 @@ Wonder how my sister's been
 
 Wonder how my brother’s doing 
 
-
-
 ---
 
 But nobody to talk to 
@@ -55,8 +49,6 @@ Cause it’s only 1 am
 Lay here and think about work 
 
 How’s the day going to go? 
-
-
 
 ---
 
@@ -70,8 +62,6 @@ Am I pushing hard enough?
 
 What am I even pushing for?
 
-
-
 ---
 
 Met some cool people today
@@ -84,8 +74,6 @@ Talked to a couple cute girls
 
 Am I a failure, how am I not?
 
-
-
 ---
 
 Thinking about myself too much
@@ -95,5 +83,3 @@ Then I think about the world
 I really want to sleep 
 
 But my mind just won’t let me 
-
-

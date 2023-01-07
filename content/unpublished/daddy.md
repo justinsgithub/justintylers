@@ -1,6 +1,6 @@
-Daddy 
-By Justin Tyler
-
+---
+title: Daddy 
+---
 All of my writings
 http://www.JustinTylers.com
 

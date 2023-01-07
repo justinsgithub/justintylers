@@ -50,7 +50,7 @@ I wonder just how bad I look
 
 Swear people are staring at me
 
-Maybe i'm just being paranoid 
+Maybe I'm just being paranoid 
 
 Maybe they're talking about me
 
@@ -58,7 +58,7 @@ Wondering what's wrong with me
 
 I try to look happy
 
-Look like i've been through hell
+Look like I've been through hell
 
 Mood has never been so crappy
 
@@ -68,7 +68,7 @@ Mood has never been so crappy
 
 Go to the bathroom mirror
 
-Now i'm in disbelief 
+Now I'm in disbelief 
 
 Never thought this could happen 
 

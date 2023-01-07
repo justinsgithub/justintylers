@@ -94,7 +94,7 @@ I think I'm moving on
 
 I think I need something more
 
-So i'm retiring from these games
+So I'm retiring from these games
 
 ---
 

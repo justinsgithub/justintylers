@@ -1,5 +1,6 @@
-Dear Child 
-By Justin Tyler
+---
+title: Dear Child 
+---
 
 All of my writings
 http://www.JustinTylers.com
