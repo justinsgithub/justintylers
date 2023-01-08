@@ -194,7 +194,7 @@ Most of my body weight is leaned on him as he carries me back to the car.
 
 ---
 
-The copes let the party go.
+The cops let the party go.
 
 I guess some people suggested an after party at my place.
 

@@ -11,6 +11,8 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
+import CardActionArea from '@mui/material/CardActionArea'
+import { PERSONAL_LINKS } from '@/constants'
 
 interface IHomeCard {
     title: string
@@ -21,23 +23,25 @@ interface IHomeCard {
 
 const HomeCard: FC<IHomeCard> = (props) => {
     return (
-        <Box mx='auto' my={3}>
-            <Card sx={{ maxWidth: 345, mx: 'auto' }}>
-                <CardContent>
-                    <Typography gutterBottom variant='h5' component='div'>
-                        {props.title}
-                    </Typography>
-                    <Typography variant='body2' color='text.secondary'>
-                        {props.description}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Link href={props.href} underline='none'>
-                        <Button size='small'>{props.button_text}</Button>
-                    </Link>
-                </CardActions>
-            </Card>
-        </Box>
+        <Link href={props.href} underline='none'>
+            <Box mx='auto' maxWidth={345} my={3}>
+                <CardActionArea>
+                    <Card>
+                        <CardContent>
+                            <Typography gutterBottom variant='h5' component='div'>
+                                {props.title}
+                            </Typography>
+                            <Typography variant='body2' color='text.secondary'>
+                                {props.description}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size='small'>{props.button_text}</Button>
+                        </CardActions>
+                    </Card>
+                </CardActionArea>
+            </Box>
+        </Link>
     )
 }
 
@@ -49,16 +53,24 @@ const Home: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Writings Health & Wellness - Justin T. Angeles</title>
+                <title>Justin T. Angeles</title>
                 <meta name='description' content='Health, wellness, and fitness' />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
             <Layout>
                 <Box mx={1}>
                     <Typography variant='h3' component='h1' mt={3} textAlign='center'>
-                        Writings, Health & Wellness
+                        Justin Angeles
                     </Typography>
-                    <HomeCard title='Recovery Writings' description={rw_desc} href='/writings' button_text='view writings'/>
+                    <Box maxWidth={900} mx='auto'>
+                        <Typography variant='subtitle1' my={3}>
+                            Thank you for taking the time to visit my site. Still very much a work in progress but hopefully you find some of this
+                            content helpful. Other content coming soon, please share with anyone else you think may benefit. Find me on{' '}
+                            <Link href={PERSONAL_LINKS.linked_in}>Linked In</Link>, <Link href={PERSONAL_LINKS.twitter}>Twitter</Link>, and{' '}
+                            <Link href={PERSONAL_LINKS.instagram}>Instagram</Link>.
+                        </Typography>
+                    </Box>
+                    <HomeCard title='Recovery Writings' description={rw_desc} href='/writings' button_text='view writings' />
                 </Box>
             </Layout>
         </>

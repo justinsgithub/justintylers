@@ -4,12 +4,12 @@ import Head from 'next/head'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
+import CardActionArea from '@mui/material/CardActionArea'
 import Typography from '@mui/material/Typography'
 import { Link } from '@/components/link'
 import { Layout } from '@/components/layout'
 import { get_all_writings } from '@/utils/get-writings'
 import { IWriting } from '@/types/writing'
-import CardActionArea from '@mui/material/CardActionArea'
 
 interface IWritingPreview {
     title: string
@@ -78,16 +78,16 @@ const WritingsPage: NextPage<IProps> = (props) => {
                         Recovery Writings
                     </Typography>
                     <Box maxWidth={900} mx='auto'>
-                    <Typography variant='subtitle1' my={3}>
-                        Recovering from crystal meth addiction (using every day for a year straight at one point) was a painfully awkward process.
-                        Socializing and doing the smallest errands felt stressful and strange without the assistance of drugs.
-                        For months I was constantly parsing my thoughts, wondering if they were realistic ideas or damaged remnants from being high for so long.
-                        Writing every day helped reorganize my mind so I could start functioning more naturally.
-                    </Typography>
-                    <Typography variant='subtitle1' my={3}>
-                        Some of these writings feel embarrassing to look back on, but I do not think I would have recovered nearly as well without them.
-                        I hope they may help and inspire others going through the dark struggles of life.
-                    </Typography>
+                        <Typography variant='subtitle1' my={3}>
+                            Recovering from crystal meth addiction (using every day for a year straight at one point) was a painfully awkward process.
+                            Socializing and doing the smallest errands felt stressful and strange without the assistance of drugs. For months I was
+                            constantly parsing my thoughts, wondering if they were realistic ideas or damaged remnants from being high for so long.
+                            Writing every day helped reorganize my mind so I could start functioning more naturally.
+                        </Typography>
+                        <Typography variant='subtitle1' my={3}>
+                            Some of these writings feel embarrassing to look back on, but I do not think I would have recovered nearly as well without
+                            them. I hope they may help and inspire others going through the dark struggles of life.
+                        </Typography>
                     </Box>
                     {props.all_writings.map((writing) => (
                         <WritingPreview key={writing.slug} {...writing} />

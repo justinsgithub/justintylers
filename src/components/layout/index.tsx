@@ -14,6 +14,7 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates'
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'
 import ListItemText from '@mui/material/ListItemText'
+import { Home, Medication } from '@mui/icons-material'
 
 interface ILayoutProps {
     children: ReactNode
@@ -23,9 +24,11 @@ export const Layout: FC<ILayoutProps> = ({ children }) => {
     const [drawerOpen, setDrawerOpen] = useState(false)
 
     const drawer_items = [
-        { text: 'Daily Workout', href: '/daily-workout', icon: <FitnessCenterIcon />},
-        { text: 'Tip of the day', href: '/tip-of-the-day', icon: <TipsAndUpdatesIcon />},
-        { text: 'About the creator', href: '/about-the-creator', icon: <InsertEmoticonIcon /> }
+        { text: 'Home', href: '/', icon: <Home />},
+        { text: 'Recovery Writings', href: '/writings', icon: <Medication />},
+        /* { text: 'Daily Workout', href: '/daily-workout', icon: <FitnessCenterIcon />}, */
+        /* { text: 'Tip of the day', href: '/tip-of-the-day', icon: <TipsAndUpdatesIcon />}, */
+        /* { text: 'About the creator', href: '/about', icon: <InsertEmoticonIcon /> } */
     ]
 
     return (
@@ -48,7 +51,7 @@ export const Layout: FC<ILayoutProps> = ({ children }) => {
             </Drawer>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position='static'>
-                    <Toolbar>
+                    <Toolbar variant='dense'>
                         <IconButton size='large' edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }} onClick={() => setDrawerOpen(true)} >
                             <MenuIcon />
                         </IconButton>
