@@ -7,9 +7,7 @@ import Head from 'next/head'
 import { Link } from '@/components/link'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardActionArea from '@mui/material/CardActionArea'
 import { PERSONAL_LINKS } from '@/constants'
@@ -34,10 +32,10 @@ const HomeCard: FC<IHomeCard> = (props) => {
                             <Typography variant='body2' color='text.secondary'>
                                 {props.description}
                             </Typography>
+                            <Typography mt={2} variant='subtitle1' color='primary'>
+                                {props.button_text}
+                            </Typography>
                         </CardContent>
-                        <CardActions>
-                            <Button size='small'>{props.button_text}</Button>
-                        </CardActions>
                     </Card>
                 </CardActionArea>
             </Box>
@@ -48,7 +46,7 @@ const HomeCard: FC<IHomeCard> = (props) => {
 const Home: NextPage = () => {
     /* const hello = trpc.example.hello.useQuery({ text: 'from tRPC' }) */
 
-    const rw_desc = 'A collection of writing that I did while recovering from crystal meth addiction.'
+    const rw_desc = 'A collection of writing that I did while recovering from drug addiction.'
 
     return (
         <>

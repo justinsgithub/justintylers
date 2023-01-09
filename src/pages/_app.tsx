@@ -7,7 +7,7 @@ import { type AppType } from 'next/app'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import theme from '@/utils/theme'
-import createEmotionCache from '@/utils/createEmotionCache'
+import createEmotionCache from '@/utils/create_emotion_cache'
 import { trpc } from '../utils/trpc'
 
 

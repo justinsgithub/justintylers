@@ -51,10 +51,7 @@ interface IProps {
 export const getStaticProps = async () => {
     const all_writings = get_all_writings([
         'title',
-        /* 'date', */
         'slug',
-        /* 'author', */
-        /* 'coverImage', */
         'excerpt',
         'preview'
     ])

@@ -53,11 +53,13 @@ model Session {
 model WritingLike {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
   user_id    String
-  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  guest      Guest?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   writing_id String
   writing    Writing @relation(fields: [writing_id], references: [id], onDelete: Cascade)
 
   @@map("writing_likes")
+  @@unique([writing_id, user_id])
 }
 
 model User {
@@ -73,6 +75,13 @@ model User {
   @@map("users")
 }
 
+model Guest {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  writing_likes WritingLike[]
+
+  @@map("guests")
+}
+
 model Writing {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
   slug          String
@@ -80,6 +89,7 @@ model Writing {
 
   @@map("writings")
 }
+
 
 model VerificationToken {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
