@@ -44,7 +44,7 @@ const HomeCard: FC<IHomeCard> = (props) => {
 }
 
 const Home: NextPage = () => {
-    /* const hello = trpc.example.hello.useQuery({ text: 'from tRPC' }) */
+    /* const hello = trpc.writing.hello.useQuery({ text: 'from tRPC' }) */
 
     const rw_desc = 'A collection of writing that I did while recovering from drug addiction.'
 

@@ -11,6 +11,6 @@ export const user_router = router({
         return ctx.prisma.user.create({data:{}})
     }),
     getAll: publicProcedure.query(({ ctx }) => {
-        return ctx.prisma.example.findMany()
+        return ctx.prisma.user.findMany()
     })
 })
