@@ -9,6 +9,7 @@
     "studio": "prisma studio",
     "gen": "prisma generate",
     "lint": "next lint",
+    "dbpush": "prisma db push",
     "start": "next start"
   },
   "dependencies": {

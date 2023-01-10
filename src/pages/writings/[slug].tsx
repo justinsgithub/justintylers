@@ -60,9 +60,14 @@ const WritingPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (p
     const session = useSession()
     const [user, setUser] = useState<User | Guest>()
     const like_mutate = trpc.writing.like.useMutation()
+    const unlike_mutate = trpc.writing.unlike.useMutation()
     const writing_query = trpc.writing.by_slug.useQuery({ slug: props.writing.slug })
     const writing_data = writing_query?.data
-    const liked_writing = writing_data?.writing_likes?.find((like) => like.user_id === user?.id)
+    const [liked, setLiked] = useState(() => {
+        const liked_writing = writing_data?.writing_likes?.find((like) => like.user_id === user?.id)
+        if (liked_writing) return true
+        return false
+    })
 
     useEffect(() => {
         const is_user = session?.data?.user
@@ -92,10 +97,28 @@ const WritingPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (p
     console.log('WRITING DATA', writing_data)
 
     const like_writing = () => {
+        setLiked(true) // Optimistic Update
         console.log('LIKING 1')
         if (user && writing_data) {
-            like_mutate.mutateAsync({ user_id: user.id, writing_id: writing_data.id })
+            try {
+                like_mutate.mutateAsync({ user_id: user.id, writing_id: writing_data.id })
+            } catch {
+                console.log('TODO: handle error')
+            }
             console.log('LIKING 2')
+        }
+    }
+
+    const unlike_writing = () => {
+        setLiked(false) // Optimistic Update
+        console.log('UNLIKING 1')
+        if (user && writing_data) {
+            try {
+                unlike_mutate.mutateAsync({ user_id: user.id, writing_id: writing_data.id })
+            } catch {
+                console.log('TODO: handle error')
+            }
+            console.log('UNLIKING 2')
         }
     }
 
@@ -110,8 +133,8 @@ const WritingPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (p
                             {props.writing.title}
                         </Typography>
                         <Stack direction='row' alignItems='center' justifyContent='center' spacing={2} mt={1}>
-                            {liked_writing ? (
-                                <IconButton color='primary' onClick={() => like_writing()}>
+                            {liked ? (
+                                <IconButton color='primary' onClick={() => unlike_writing()}>
                                     <ThumbUpAlt fontSize='medium' />
                                 </IconButton>
                             ) : (
