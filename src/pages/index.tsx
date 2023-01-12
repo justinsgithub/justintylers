@@ -63,7 +63,7 @@ const Home: NextPage = () => {
                     <Box maxWidth={900} mx='auto'>
                         <Typography variant='subtitle1' my={3}>
                             Thank you for taking the time to visit my site. Still very much a work in progress but hopefully you find some of this
-                            content helpful. Other content coming soon, please share with anyone else you think may benefit. Find me on{' '}
+                            content helpful. Other content coming soon, please share with anyone you think may benefit. Find me on{' '}
                             <Link href={PERSONAL_LINKS.linked_in}>Linked In</Link>, <Link href={PERSONAL_LINKS.twitter}>Twitter</Link>, and{' '}
                             <Link href={PERSONAL_LINKS.instagram}>Instagram</Link>.
                         </Typography>

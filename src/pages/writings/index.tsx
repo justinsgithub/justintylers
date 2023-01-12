@@ -82,7 +82,7 @@ const WritingsPage: NextPage<IProps> = (props) => {
                             Writing every day helped reorganize my mind so I could start functioning more naturally.
                         </Typography>
                         <Typography variant='subtitle1' my={3}>
-                            Some of these writings feel embarrassing to look back on, but I do not think I would have recovered nearly as well without
+                            Some of these writings feel awkward to look back on, but I do not think I would have recovered nearly as well without
                             them. I hope they may help and inspire others going through the dark struggles of life.
                         </Typography>
                     </Box>

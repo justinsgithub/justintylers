@@ -6,12 +6,10 @@ const writing_include = { writing_likes: { select: { id: true, user_id: true } }
 
 export const writing_router = router({
     by_slug: publicProcedure.input(z.object({ slug: z.string() })).query(({ ctx, input }) => {
-        const is_writing = ctx.prisma.writing.findFirst({
+        return ctx.prisma.writing.findFirst({
             where: { slug: input.slug },
             include: writing_include
         })
-        if (is_writing) return is_writing
-        return ctx.prisma.writing.create({ data: { slug: input.slug }, include: writing_include })
     }),
     like: publicProcedure.input(z.object({ writing_id: z.string(), user_id: z.string() })).mutation(async ({ ctx, input }) => {
         const isUser = ctx.session?.user?.id

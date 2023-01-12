@@ -1,7 +1,8 @@
 import { createProxySSGHelpers } from '@trpc/react-query/ssg'
 import { NextPage, GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import { prisma } from '@/server/db/client'
-import { Guest, User } from '@prisma/client'
+import { type Guest } from '@prisma/client'
+import { type User } from 'next-auth'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import superjson from 'superjson'
@@ -20,12 +21,31 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const posts = get_all_writings(['slug'])
+    const writing_slugs = get_all_writings(['slug']).map(writing => writing.slug)
+
+    const db_writings = await prisma.writing.findMany()
+
+    const db_slugs = db_writings.map(writing => writing.slug)
+
+    const insert_these = writing_slugs.filter(slug => typeof(slug) === 'string' && !db_slugs.includes(slug)) as string[]
+
+    if(insert_these.length > 0) {
+        const formatted = insert_these.map(slug => { return {slug} })
+        await prisma.writing.createMany({data: formatted})
+    }
+
+
+    console.log('STATIC PATHS DB WRITINGS', db_writings)
+
+    console.log('STATIC PATHS WRITINGS', writing_slugs)
+
+    console.log('INSERT THESE', insert_these)
+
     return {
-        paths: posts.map((post) => {
+        paths: writing_slugs.map((slug) => {
             return {
                 params: {
-                    slug: post.slug
+                    slug
                 }
             }
         }),
