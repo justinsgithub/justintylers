@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "cp .env .env.bak; cp .env.prod .env.prod.bak; cp .env.prod .env; next build; cp .env.bak .env;",
+    "build": "next build",
+    "devbuild": "cp .env .env.bak; cp .env.prod .env.prod.bak; cp .env.prod .env; next build; cp .env.bak .env;",
     "dev": "next dev",
     "postinstall": "prisma generate",
     "studio": "prisma studio",
