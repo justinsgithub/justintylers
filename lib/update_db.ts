@@ -1,9 +1,18 @@
-import fs from 'fs'
-import { join } from 'path'
-import { MongoClient } from 'mongodb'
+import { prisma } from '@/server/db'
+import { get_all_writings } from '@/server/get-writings'
 
-const posts_directory = join(process.cwd(), 'content/writings')
+const update_writings = async () => {
+  const writing_slugs = get_all_writings(['slug']).map((writing) => writing.slug)
+  const db_writings = await prisma.writing.findMany()
+  const db_slugs = db_writings.map((writing) => writing.slug)
+  const insert_these = writing_slugs.filter((slug) => typeof slug === 'string' && !db_slugs.includes(slug)) as string[]
+  console.log('INSERTING', insert_these)
+  if (insert_these.length > 0) {
+    const formatted = insert_these.map((slug) => {
+      return { slug }
+    })
+    await prisma.writing.createMany({ data: formatted })
+  }
+}
 
-const writing_slugs = fs.readdirSync(posts_directory).map(slug => slug.replace(/\.md$/, ''))
-
-console.log(writing_slugs)
+update_writings()

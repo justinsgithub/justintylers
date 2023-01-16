@@ -1,28 +1,13 @@
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
-import { serialize, CookieSerializeOptions } from 'cookie'
-import { NextApiResponse, NextApiRequest } from 'next'
+import { getServerAuthSession } from "@/server/auth";
+import { prisma } from "@/server/db";
+import { setCookie } from "cookies-next";
 
-
-import { getServerAuthSession } from "../common/get-server-auth-session";
-import { prisma } from "../db/client";
-
-const setCookie = ( res: NextApiResponse, name: string, value: unknown, options: CookieSerializeOptions = {}) => {
-  const stringValue =
-    typeof value === 'object' ? 'j:' + JSON.stringify(value) : String(value)
-
-  if (typeof options.maxAge === 'number') {
-    options.expires = new Date(Date.now() + options.maxAge * 1000)
-  }
-
-  res.setHeader('Set-Cookie', serialize(name, stringValue, options))
-}
 
 type CreateContextOptions = {
   session: Session | null;
-  req: NextApiRequest | null
-  res: NextApiResponse | null
 };
 
 /** Use this helper for:
@@ -34,8 +19,6 @@ export const createContextInner = async (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
-    req: opts.req,
-    res: opts.res
   };
 };
 
@@ -44,18 +27,30 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (opts: CreateNextContextOptions) => {
-  /* setCookie(opts.res, 'Next.js', 'api-middleware!', { path: '/', maxAge: 2592000 }) */
-  /* console.log('COOKIES', opts.req.cookies) */
-  const { req, res } = opts;
+  const { req, res } = opts
+
+  let user_id: string
 
   // Get the session from the server using the unstable_getServerSession wrapper function
   const session = await getServerAuthSession({ req, res });
 
-  return await createContextInner({
-    session,
-    req,
-    res
-  });
+  if (session?.user?.id) {
+    user_id = session.user.id
+  } else {
+    const gid = req.cookies['g']
+    if (gid) {
+      user_id = gid
+    } else {
+      const new_guest = await prisma.guest.create({data:{}})
+      user_id = new_guest.id
+      setCookie('g', user_id, {req: req, res: res, maxAge: 3600 * 24 * 365})
+    }
+  }
+
+  const inner_context = await createContextInner({session})
+
+  // make request and response available to procedures for setting cookies and such
+  return {...inner_context, req, res, user_id}
 };
 
 export type Context = inferAsyncReturnType<typeof createContext>;

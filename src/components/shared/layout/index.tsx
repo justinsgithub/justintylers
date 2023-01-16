@@ -4,15 +4,12 @@ import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Box from '@mui/material/Box'
-import {Link} from '@/components/link'
+import {Link} from '@/components/shared/link'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates'
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'
 import ListItemText from '@mui/material/ListItemText'
 import { Home, Medication } from '@mui/icons-material'
 
@@ -26,9 +23,6 @@ export const Layout: FC<ILayoutProps> = ({ children }) => {
     const drawer_items = [
         { text: 'Home', href: '/', icon: <Home />},
         { text: 'Recovery Writings', href: '/writings', icon: <Medication />},
-        /* { text: 'Daily Workout', href: '/daily-workout', icon: <FitnessCenterIcon />}, */
-        /* { text: 'Tip of the day', href: '/tip-of-the-day', icon: <TipsAndUpdatesIcon />}, */
-        /* { text: 'About the creator', href: '/about', icon: <InsertEmoticonIcon /> } */
     ]
 
     return (

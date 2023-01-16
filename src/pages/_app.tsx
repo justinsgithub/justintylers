@@ -6,13 +6,13 @@ import { CacheProvider, type EmotionCache } from '@emotion/react'
 import { type AppType } from 'next/app'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
-import theme from '@/utils/theme'
-import createEmotionCache from '@/utils/create_emotion_cache'
-import { trpc } from '../utils/trpc'
+import {theme} from '@/client/theme'
+import {create_emotion_cache} from '@/client/create-emotion-cache'
+import { api } from '@/client/api'
 
 
 // Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache()
+const client_side_emotion_cache = create_emotion_cache()
 
 interface IAppType {
   session: Session | null
@@ -23,7 +23,7 @@ interface MyAppProps extends AppProps {
 }
 
 const MyApp: AppType<IAppType> = (props: MyAppProps) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } } = props
+  const { Component, emotionCache = client_side_emotion_cache, pageProps: { session, ...pageProps } } = props
 
   return (
     <SessionProvider session={session}>
@@ -41,4 +41,4 @@ const MyApp: AppType<IAppType> = (props: MyAppProps) => {
   )
 }
 
-export default trpc.withTRPC(MyApp)
+export default api.withTRPC(MyApp)
