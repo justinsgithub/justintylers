@@ -14,7 +14,7 @@ export const writing_router = router({
   }),
 
   like: public_procedure.input(z.object({ writing_id: z.string() })).mutation(async ({ ctx, input }) => {
-    const isUser = ctx.session?.user?.id
+    const isUser = ctx?.session?.user?.id
     return ctx.prisma.writingLike.create({
       data: {
         writing: { connect: { id: input.writing_id } },

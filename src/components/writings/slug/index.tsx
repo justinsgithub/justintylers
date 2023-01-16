@@ -35,22 +35,25 @@ export const Writing: FC<IWritingProps> = (props) => {
       writing_query.refetch()
     }
   })
+  const _liked = writing_query?.data && writing_query?.data?.writing_likes?.length > 0 || false
+  const [liked, set_liked] = useState(_liked)
   const user_id = user_query?.data
   /* const [user, setUser] = useState<User | Guest>() */
-  const [liked, set_liked] = useState(() => {
-    if (writing_query?.data) {
-      return writing_query?.data?.writing_likes?.length > 0
-    }
-    return false
-  })
+  /* const [liked, set_liked] = useState(() => { */
+  /*   if (writing_query?.data) { */
+  /*     return writing_query?.data?.writing_likes?.length > 0 */
+  /*   } */
+  /*   return false */
+  /* }) */
 
+  console.log('LIKED WRITING', liked)
   if (!props.writing?.slug) return <ErrorPage statusCode={404} />
 
   // prettier-ignore
   const disable_like = !user_id || !writing_query?.data || writing_query.isRefetching || like_mutate.isLoading || unlike_mutate.isLoading
 
   const like_writing = () => {
-    if (disable_like) {
+    if (disable_like || _liked) {
       return
     }
     set_liked(true) // Optimistic Update
@@ -62,7 +65,7 @@ export const Writing: FC<IWritingProps> = (props) => {
   }
 
   const unlike_writing = () => {
-    if (disable_like) {
+    if (disable_like || !_liked) {
       return
     }
     set_liked(false) // Optimistic Update
