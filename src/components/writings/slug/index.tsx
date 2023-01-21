@@ -33,10 +33,6 @@ export const Writing: FC<IWritingProps> = (props) => {
 
   if (!props.writing?.slug) return <ErrorPage statusCode={404} />
 
-  const open_comments = () => {
-    console.log('opening comments')
-  }
-
   return (
     <Layout>
       {router?.isFallback ? (

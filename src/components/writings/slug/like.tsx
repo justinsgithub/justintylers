@@ -16,7 +16,7 @@ export const Like: FC<ILike> = (props) => {
     }
   })
 
-  const _liked = (writing_query?.data && writing_query?.data?.writing_likes?.length > 0) || false
+  const _liked = (writing_query?.data && writing_query?.data?.likes?.length > 0) || false
 
   const [liked, set_liked] = useState<boolean>()
 
