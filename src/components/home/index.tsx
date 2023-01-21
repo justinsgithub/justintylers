@@ -51,7 +51,7 @@ export const Home: FC = () => {
       </Head>
       <Layout>
         <Box mx={1}>
-          <Typography variant='h3' component='h1' mt={3} textAlign='center'>
+          <Typography variant='h3' component='h1' mt={3} textAlign='center' className='text-red-500'>
             Justin Angeles
           </Typography>
           <Box maxWidth={900} mx='auto'>

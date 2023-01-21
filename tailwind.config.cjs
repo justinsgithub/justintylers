@@ -52,6 +52,10 @@ const MyTheme = {
 }
 
 module.exports = {
+  corePlugins: {
+    preflight: false
+  },
+  important: '#__next',
   darkMode: 'class',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
