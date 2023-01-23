@@ -1,6 +1,12 @@
 import { Roboto } from '@next/font/google'
-import { createTheme } from '@mui/material/styles'
-/* import { red } from '@mui/material/colors'; */
+import { createTheme, ThemeOptions } from '@mui/material/styles'
+import resolve_config from 'tailwindcss/resolveConfig'
+import tailwind_config_file from 'tailwind.config.cjs'
+import type { Config } from 'tailwindcss'
+
+const tailwind_config: any = resolve_config(tailwind_config_file as Config)
+
+console.log('TAILWIND CONFIG', tailwind_config)
 
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -9,20 +15,62 @@ export const roboto = Roboto({
   fallback: ['Helvetica', 'Arial', 'sans-serif']
 })
 
-// Create a theme instance.
-export const theme = createTheme({
-  /* palette: { */
-  /*   primary: { */
-  /*     main: '#556cd6', */
-  /*   }, */
-  /*   secondary: { */
-  /*     main: '#19857b', */
-  /*   }, */
-  /*   error: { */
-  /*     main: red.A400, */
-  /*   }, */
-  /* }, */
+const root_element = typeof document !== 'undefined' ? document.getElementById('__next') : undefined
+
+const create_theme = (mode: 'light' | 'dark', opts: Partial<ThemeOptions>) => createTheme({
+  ...opts,
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: tailwind_config.theme.screens.sm,
+      md: tailwind_config.theme.screens.md,
+      lg: tailwind_config.theme.screens.lg,
+      xl: tailwind_config.theme.screens.xl,
+      '2xl': tailwind_config.theme.screens['2xl']
+    }
+  },
+  components: {
+    MuiPopover: {
+      defaultProps: {
+        container: root_element
+      }
+    },
+    MuiPopper: {
+      defaultProps: {
+        container: root_element
+      }
+    }
+  },
   typography: {
     fontFamily: roboto.style.fontFamily
-  }
+  },
+  palette: {
+    background: {
+      default: mode === 'light' ? '#fff' : tailwind_config.theme.colors.formal.DEFAULT,
+      paper: mode === 'light' ? '#fff' : tailwind_config.theme.colors.formal.DEFAULT
+    },
+    primary: {
+      main: tailwind_config.theme.colors.sky['600']
+    },
+    secondary: {
+      main: tailwind_config.theme.colors.rose['400']
+    },
+    info: {
+      main: tailwind_config.theme.colors.purple['600']
+    },
+    warning: {
+      main: tailwind_config.theme.colors.orange['500']
+    },
+    error: {
+      main: tailwind_config.theme.colors.red['600']
+    },
+    success: {
+      main: tailwind_config.theme.colors.green['700']
+    },
+    mode
+  },
 })
+
+export const light_theme = create_theme('light', {})
+
+export const dark_theme = create_theme('dark', {})

@@ -23,7 +23,7 @@ const WritingPreview: FC<IWritingPreview> = (props) => {
     <Link href={'/writings/' + props.slug} underline='none'>
       <Box mx='auto' maxWidth={345} my={3}>
         <CardActionArea>
-          <Card>
+          <Card variant='outlined'>
             <CardContent>
               <Typography gutterBottom variant='h5' component='div'>
                 {props.title}
@@ -55,6 +55,7 @@ export const Writings: FC<IProps> = (props) => {
   /* console.log('SESSION', session) */
 
 
+
   return (
     <>
       <Head>
@@ -64,7 +65,7 @@ export const Writings: FC<IProps> = (props) => {
       </Head>
       <Layout>
         <Box mx={2}>
-          <Typography variant='h3' component='h1' mt={3} textAlign='center'>
+          <Typography variant='h3' component='h1' className='mt-6 text-center'>
             Recovery Writings
           </Typography>
           <Box maxWidth={900} mx='auto'>

@@ -1,5 +1,7 @@
 import Typography from '@mui/material/Typography'
+import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
 import Drawer from '@mui/material/Drawer'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
@@ -17,6 +19,7 @@ import Divider from '@mui/material/Divider'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Avatar from '@mui/material/Avatar'
+import { Paper } from '@mui/material'
 
 interface IWritingProps {
   writing: {
@@ -41,17 +44,25 @@ export const Writing: FC<IWritingProps> = (props) => {
         <>
           <Drawer anchor='right' open={comments_open} onClose={() => set_comments_open(false)}>
             <Box sx={{ width: 350 }} role='presentation'>
+              <FormContainer>
+                <Stack my={1}>
+                  <TextFieldElement name='comment' label='leave a comment' multiline/>
+                </Stack>
+              </FormContainer>
               <List sx={{ width: '100%', maxWidth: 350, bgcolor: 'background.paper' }}>
                 <ListItem alignItems='flex-start'>
                   <ListItemText primary='Guest 48292' secondary='Awesome writing, really inspired me' />
                 </ListItem>
                 <Divider variant='inset' component='li' />
                 <ListItem alignItems='flex-start'>
-                    <ListItemText primary='Guest 30854' secondary={"Great writing, super relatable, thank you for posting these"} />
+                  <ListItemText primary='Guest 30854' secondary={'Great writing, super relatable, thank you for posting these'} />
                 </ListItem>
                 <Divider variant='inset' component='li' />
                 <ListItem alignItems='flex-start'>
-                  <ListItemText primary='Guest 30942' secondary={'Awesome content, thank you for all the value, just subscribed to become a member yesterday'} />
+                  <ListItemText
+                    primary='Guest 30942'
+                    secondary={'Awesome content, thank you for all the value, just subscribed to become a member yesterday'}
+                  />
                 </ListItem>
               </List>
             </Box>
