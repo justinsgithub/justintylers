@@ -35,13 +35,25 @@ export const writing_router = router({
     }
   }),
 
-  get_all: public_procedure.query(({ ctx }) => {
-    return ctx.prisma.writing.findMany()
-  }),
-
-  hello: public_procedure.input(z.object({ text: z.string().nullish() }).nullish()).query(({ input }) => {
-    return {
-      greeting: `Hello ${input?.text ?? 'world'}`
+  comment: public_procedure.input(z.object({ writing_id: z.string(), action: z.enum(['create', 'delete']) })).mutation(async ({ ctx, input }) => {
+    const isUser = ctx?.session?.user?.id
+    if (input.action === 'create') {
+      return ctx.prisma.like.create({
+        data: {
+          writing: { connect: { id: input.writing_id } },
+          user: isUser ? { connect: { id: isUser } } : undefined,
+          guest: !isUser ? { connect: { id: ctx.user_id } } : undefined
+        }
+      })
+    } else {
+      return ctx.prisma.like.delete({
+        where: {
+          content_id_user_id: {
+            content_id: input.writing_id,
+            user_id: ctx.user_id
+          }
+        }
+      })
     }
-  })
+  }),
 })
