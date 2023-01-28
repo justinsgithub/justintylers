@@ -6,8 +6,6 @@ import type { Config } from 'tailwindcss'
 
 const tailwind_config: any = resolve_config(tailwind_config_file as Config)
 
-console.log('TAILWIND CONFIG', tailwind_config)
-
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],

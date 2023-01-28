@@ -46,6 +46,24 @@ model Session {
   @@map("sessions")
 }
 
+model DeletedComment {
+  deleted_at DateTime @default(now())
+  created_at DateTime
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  body       String
+  user_id    String
+  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  guest      Guest?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  content_id String
+  likes      Like[]
+  writing    Writing? @relation(fields: [content_id], references: [id], onDelete: Cascade)
+
+  children DeletedComment[] @relation("replies")
+  parent   DeletedComment?  @relation("replies", fields: [content_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("deleted_comments")
+}
+
 model Comment {
   created_at DateTime @default(now())
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -57,54 +75,61 @@ model Comment {
   likes      Like[]
   writing    Writing? @relation(fields: [content_id], references: [id], onDelete: Cascade)
 
+  children Comment[] @relation("replies")
+  parent   Comment?  @relation("replies", fields: [content_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
   @@unique([content_id, user_id])
   @@map("comments")
 }
 
 model Like {
-  created_at DateTime @default(now())
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  user_id    String
-  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  guest      Guest?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  content_id String
-  writing    Writing? @relation(fields: [content_id], references: [id], onDelete: Cascade)
-  comment    Comment? @relation(fields: [content_id], references: [id], onDelete: Cascade)
+  created_at      DateTime        @default(now())
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  user_id         String
+  user            User?           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  guest           Guest?          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  content_id      String
+  writing         Writing?        @relation(fields: [content_id], references: [id], onDelete: Cascade)
+  comment         Comment?        @relation(fields: [content_id], references: [id], onDelete: Cascade)
+  deleted_comment DeletedComment? @relation(fields: [content_id], references: [id], onDelete: Cascade)
 
   @@unique([content_id, user_id])
   @@map("likes")
 }
 
 model User {
-  created_at    DateTime  @default(now())
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  likes         Like[]
-  comments      Comment[]
+  created_at       DateTime         @default(now())
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  name             String?
+  email            String?          @unique
+  emailVerified    DateTime?
+  image            String?
+  accounts         Account[]
+  sessions         Session[]
+  likes            Like[]
+  comments         Comment[]
+  deleted_comments DeletedComment[]
 
   @@map("users")
 }
 
 model Guest {
-  created_at DateTime  @default(now())
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  likes      Like[]
-  comments   Comment[]
+  created_at       DateTime         @default(now())
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  likes            Like[]
+  comments         Comment[]
+  deleted_comments DeletedComment[]
 
   @@map("guests")
 }
 
 model Writing {
-  created_at DateTime  @default(now())
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  slug       String
-  likes      Like[]
-  comments   Comment[]
+  created_at       DateTime         @default(now())
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  slug             String
+  likes            Like[]
+  comments         Comment[]
+  deleted_comments DeletedComment[]
 
   @@unique(slug)
   @@map("writings")

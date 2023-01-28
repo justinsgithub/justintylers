@@ -1,14 +1,16 @@
 import { api } from '@/client/api'
-import { IconButton } from '@mui/material'
-import { ThumbUpAlt, ThumbUpOffAlt } from '@mui/icons-material'
 import { type FC, useEffect, useState } from 'react'
+import IconButton from '@mui/material/IconButton'
+import ThumbUpAlt from '@mui/icons-material/ThumbUpAlt'
+import ThumbUpOffAlt from '@mui/icons-material/ThumbUpOffAlt'
+import Tooltip from '@mui/material/Tooltip'
 
 interface ILike {
-  slug: string
+  writing_query: any
 }
 
 export const Like: FC<ILike> = (props) => {
-  const writing_query = api.writing.by_slug.useQuery({ slug: props.slug })
+  const writing_query = props.writing_query
 
   const like_mutate = api.writing.like.useMutation({
     onSuccess: () => {
@@ -16,7 +18,7 @@ export const Like: FC<ILike> = (props) => {
     }
   })
 
-  const _liked = (writing_query?.data && writing_query?.data?.likes?.length > 0) || false
+  const _liked = (writing_query?.data && writing_query?.data?.writing?.likes?.length > 0) || false
 
   const [liked, set_liked] = useState<boolean>()
 
@@ -30,7 +32,7 @@ export const Like: FC<ILike> = (props) => {
     if (disable_like || _liked) return
     set_liked(true) // Optimistic Update
     try {
-      like_mutate.mutateAsync({ writing_id: writing_query?.data?.id || '', action: 'create' })
+      like_mutate.mutateAsync({ writing_id: writing_query?.data?.writing?.id || '', action: 'create' })
     } catch {
       return
     }
@@ -40,22 +42,26 @@ export const Like: FC<ILike> = (props) => {
     if (disable_like || !_liked) return
     set_liked(false) // Optimistic Update
     try {
-      like_mutate.mutateAsync({ writing_id: writing_query?.data?.id || '', action: 'delete' })
-    } catch {
-      return
+      like_mutate.mutateAsync({ writing_id: writing_query?.data?.writing?.id || '', action: 'delete' })
+    } catch (err) {
+      throw err
     }
   }
 
   return (
     <>
       {liked ? (
-        <IconButton color='primary' onClick={() => unlike_writing()}>
-          <ThumbUpAlt fontSize='medium' />
-        </IconButton>
+        <Tooltip title='Like Writing'>
+          <IconButton color='primary' onClick={() => unlike_writing()}>
+            <ThumbUpAlt fontSize='medium' />
+          </IconButton>
+        </Tooltip>
       ) : (
-        <IconButton onClick={() => like_writing()}>
-          <ThumbUpOffAlt fontSize='medium' />
-        </IconButton>
+        <Tooltip title='Unlike Writing'>
+          <IconButton onClick={() => like_writing()}>
+            <ThumbUpOffAlt color='primary' fontSize='medium' />
+          </IconButton>
+        </Tooltip>
       )}
     </>
   )
