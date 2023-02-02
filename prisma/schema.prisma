@@ -1,24 +1,106 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mongodb"
-  // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-  // Further reading:
-  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url      = env("DATABASE_URL")
+}
+
+model Reply {
+  created_at DateTime @default(now())
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  body       String
+  user_id    String
+  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  guest      Guest?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  likes      Like[]
+
+  comment_id String
+  comment    Comment @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+
+  parent_id String?
+  parent    Reply?  @relation("nested_replies", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children  Reply[] @relation("nested_replies")
+
+  @@unique([comment_id, user_id])
+  @@unique([parent_id, user_id])
+  @@map("replies")
+}
+
+model Comment {
+  created_at DateTime @default(now())
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  body       String
+  user_id    String
+  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  guest      Guest?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  writing_id String
+  likes      Like[]
+  writing    Writing  @relation(fields: [writing_id], references: [id], onDelete: Cascade)
+  replies    Reply[]
+
+  @@unique([writing_id, user_id])
+  @@map("comments")
+}
+
+model Like {
+  created_at DateTime @default(now())
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  user_id    String
+  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  guest      Guest?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  content_id String
+  writing    Writing? @relation(fields: [content_id], references: [id], onDelete: Cascade)
+  comment    Comment? @relation(fields: [content_id], references: [id], onDelete: Cascade)
+  reply      Reply?   @relation(fields: [content_id], references: [id], onDelete: Cascade)
+
+  @@unique([content_id, user_id])
+  @@map("likes")
+}
+
+model User {
+  created_at    DateTime  @default(now())
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  likes         Like[]
+  comments      Comment[]
+  replies       Reply[]
+
+  @@map("users")
+}
+
+model Guest {
+  created_at DateTime  @default(now())
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  likes      Like[]
+  comments   Comment[]
+  replies    Reply[]
+
+  @@map("guests")
+}
+
+model Writing {
+  created_at DateTime  @default(now())
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  slug       String
+  likes      Like[]
+  comments   Comment[]
+
+  @@unique(slug)
+  @@map("writings")
 }
 
 // Necessary for Next auth
 model Account {
   created_at        DateTime @default(now())
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  user_id           String
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -29,7 +111,7 @@ model Account {
   scope             String?
   id_token          String? // @db.Text
   session_state     String?
-  user              User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -39,100 +121,11 @@ model Session {
   created_at   DateTime @default(now())
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  user_id      String
+  userId       String
   expires      DateTime
-  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
-}
-
-model DeletedComment {
-  deleted_at DateTime @default(now())
-  created_at DateTime
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  body       String
-  user_id    String
-  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  guest      Guest?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  content_id String
-  likes      Like[]
-  writing    Writing? @relation(fields: [content_id], references: [id], onDelete: Cascade)
-
-  children DeletedComment[] @relation("replies")
-  parent   DeletedComment?  @relation("replies", fields: [content_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@map("deleted_comments")
-}
-
-model Comment {
-  created_at DateTime @default(now())
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  body       String
-  user_id    String
-  user       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  guest      Guest?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  content_id String
-  likes      Like[]
-  writing    Writing? @relation(fields: [content_id], references: [id], onDelete: Cascade)
-
-  children Comment[] @relation("replies")
-  parent   Comment?  @relation("replies", fields: [content_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@unique([content_id, user_id])
-  @@map("comments")
-}
-
-model Like {
-  created_at      DateTime        @default(now())
-  id              String          @id @default(auto()) @map("_id") @db.ObjectId
-  user_id         String
-  user            User?           @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  guest           Guest?          @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  content_id      String
-  writing         Writing?        @relation(fields: [content_id], references: [id], onDelete: Cascade)
-  comment         Comment?        @relation(fields: [content_id], references: [id], onDelete: Cascade)
-  deleted_comment DeletedComment? @relation(fields: [content_id], references: [id], onDelete: Cascade)
-
-  @@unique([content_id, user_id])
-  @@map("likes")
-}
-
-model User {
-  created_at       DateTime         @default(now())
-  id               String           @id @default(auto()) @map("_id") @db.ObjectId
-  name             String?
-  email            String?          @unique
-  emailVerified    DateTime?
-  image            String?
-  accounts         Account[]
-  sessions         Session[]
-  likes            Like[]
-  comments         Comment[]
-  deleted_comments DeletedComment[]
-
-  @@map("users")
-}
-
-model Guest {
-  created_at       DateTime         @default(now())
-  id               String           @id @default(auto()) @map("_id") @db.ObjectId
-  likes            Like[]
-  comments         Comment[]
-  deleted_comments DeletedComment[]
-
-  @@map("guests")
-}
-
-model Writing {
-  created_at       DateTime         @default(now())
-  id               String           @id @default(auto()) @map("_id") @db.ObjectId
-  slug             String
-  likes            Like[]
-  comments         Comment[]
-  deleted_comments DeletedComment[]
-
-  @@unique(slug)
-  @@map("writings")
 }
 
 model VerificationToken {

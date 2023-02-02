@@ -49,7 +49,7 @@ export const Home: FC = () => {
   return (
     <>
       <Head>
-        <title>Justin T. Angeles</title>
+        <title>Justin Develops</title>
         <meta name='description' content='Health, wellness, and fitness' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
@@ -57,12 +57,11 @@ export const Home: FC = () => {
         <Layout>
           <Box mx={1}>
             <Typography variant='h3' component='h1' className='mt-8 text-center'>
-              Justin Angeles
+              Justin Develops
             </Typography>
-            <Box maxWidth={900} mx='auto'>
+            <Box maxWidth={350} mx='auto'>
               <Typography variant='subtitle1' my={3}>
-                Thank you for taking the time to visit my site. Hopefully you find some of this content helpful. Other content coming soon, please
-                share with anyone you think may benefit. Find me on <Link href={PERSONAL_LINKS.linked_in}>Linked In</Link>,{' '}
+                Thank you for taking the time to visit! Please share with whomever might find this content beneficial. Find me on <Link href={PERSONAL_LINKS.linked_in}>Linked In</Link>,{' '}
                 <Link href={PERSONAL_LINKS.twitter}>Twitter</Link>, and <Link href={PERSONAL_LINKS.instagram}>Instagram</Link>.
               </Typography>
             </Box>

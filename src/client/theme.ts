@@ -13,7 +13,7 @@ export const roboto = Roboto({
   fallback: ['Helvetica', 'Arial', 'sans-serif']
 })
 
-const root_element = typeof document !== 'undefined' ? document.getElementById('__next') : undefined
+const root_element = typeof window !== 'undefined' ? document.getElementById('__next') : undefined
 
 const create_theme = (mode: 'light' | 'dark', opts: Partial<ThemeOptions>) => createTheme({
   ...opts,

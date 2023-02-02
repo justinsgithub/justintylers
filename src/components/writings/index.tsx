@@ -49,8 +49,8 @@ interface IProps {
 }
 
 export const Writings: FC<IProps> = (props) => {
-  const session = useSession()
-  const writings_query = api.writing.get_all.useQuery()
+  // const session = useSession()
+  // const writings_query = api.writing.get_all.useQuery()
   /* console.log('writings query', writings_query) */
   /* console.log('SESSION', session) */
 

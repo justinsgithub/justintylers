@@ -28,37 +28,37 @@ export const Like: FC<ILike> = (props) => {
 
   const disable_like = liked === undefined || !writing_query?.data || writing_query.isRefetching || like_mutate.isLoading
 
-  const like_writing = () => {
-    if (disable_like || _liked) return
-    set_liked(true) // Optimistic Update
-    try {
-      like_mutate.mutateAsync({ writing_id: writing_query?.data?.writing?.id || '', action: 'create' })
-    } catch {
-      return
-    }
-  }
-
-  const unlike_writing = () => {
-    if (disable_like || !_liked) return
-    set_liked(false) // Optimistic Update
-    try {
-      like_mutate.mutateAsync({ writing_id: writing_query?.data?.writing?.id || '', action: 'delete' })
-    } catch (err) {
-      throw err
+  const like_writing = (like: boolean) => {
+    if (like) {
+      if (disable_like || _liked) return
+      set_liked(true) // Optimistic Update
+      try {
+        like_mutate.mutateAsync({ writing_id: writing_query?.data?.writing?.id || '', action: 'create' })
+      } catch {
+        return
+      }
+    } else {
+      if (disable_like || !_liked) return
+      set_liked(false) // Optimistic Update
+      try {
+        like_mutate.mutateAsync({ writing_id: writing_query?.data?.writing?.id || '', action: 'delete' })
+      } catch (err) {
+        throw err
+      }
     }
   }
 
   return (
     <>
       {liked ? (
-        <Tooltip title='Like Writing'>
-          <IconButton color='primary' onClick={() => unlike_writing()}>
+        <Tooltip title='Unlike Writing'>
+          <IconButton color='primary' onClick={() => like_writing(false)}>
             <ThumbUpAlt fontSize='medium' />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title='Unlike Writing'>
-          <IconButton onClick={() => like_writing()}>
+        <Tooltip title='Like Writing'>
+          <IconButton onClick={() => like_writing(true)}>
             <ThumbUpOffAlt color='primary' fontSize='medium' />
           </IconButton>
         </Tooltip>
