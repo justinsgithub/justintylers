@@ -1,12 +1,11 @@
 import { useEffect, useState, type FC } from 'react'
 import { api } from '@/client/api'
-import { Comment, Like } from '@prisma/client'
+import type { Comment as _Comment } from '@prisma/client'
+import { Comment, IComment } from './comment'
 import { type FieldError, FormContainer, type SubmitHandler, TextFieldElement, UseFormReturn } from 'react-hook-form-mui'
-import ThumbUpAlt from '@mui/icons-material/ThumbUpAlt'
-import ThumbUpOffAlt from '@mui/icons-material/ThumbUpOffAlt'
-import Box from '@mui/material/Box'
-import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Divider from '@mui/material/Divider'
@@ -14,87 +13,8 @@ import ListItemText from '@mui/material/ListItemText'
 import SendIcon from '@mui/icons-material/Send'
 import Tooltip from '@mui/material/Tooltip'
 
-type LikeComment = (like: boolean, comment_id: string) => Promise<Like>
-
 interface IFormValues {
   comment: string
-}
-
-interface IComment {
-  likes: Like[]
-  created_at: Date
-  id: string
-  user_id: string
-  children: Comment[]
-  body: string
-}
-
-interface ICommentProps {
-  comment: IComment
-  user_id: string
-  like_comment: LikeComment
-}
-
-const Comment: FC<ICommentProps> = (props) => {
-  const comment = props.comment
-  const like_comment = props.like_comment
-  const author = `Guest ${comment.user_id.slice(comment.user_id.length - 5)}`
-  const liked_comment = comment.likes.find((like) => like.user_id === props.user_id)
-  const [liked, set_liked] = useState(liked_comment ? true : false)
-  const [disable_like, set_disable_like] = useState(false)
-
-  // hacky but works for now
-  useEffect(() => {
-    setTimeout(() => {
-      set_disable_like(false)
-    }, 3000)
-  }, [disable_like])
-
-  const handle_click = (like: boolean) => {
-    if (disable_like) return
-    set_disable_like(true)
-    if (like) {
-      set_liked(like) // Optimistic Update
-      try {
-        like_comment(like, comment.id)
-        /* like_mutate.mutateAsync({ writing_id: writing_query?.data?.writing?.id || '', action: 'create' }) */
-      } catch {
-        return
-      }
-    } else {
-      set_liked(like) // Optimistic Update
-      try {
-        like_comment(like, comment.id)
-        /* like_mutate.mutateAsync({ writing_id: writing_query?.data?.writing?.id || '', action: 'delete' }) */
-      } catch (err) {
-        throw err
-      }
-    }
-  }
-
-  const sec_action = liked ? (
-    <Tooltip title='Unlike Comment'>
-      <IconButton edge='end' aria-label='unlike' onClick={() => handle_click(false)}>
-        <ThumbUpAlt color='primary' fontSize='small' />
-      </IconButton>
-    </Tooltip>
-  ) : (
-    <Tooltip title='Like Comment'>
-      <IconButton edge='end' aria-label='like' onClick={() => handle_click(true)}>
-        <ThumbUpOffAlt fontSize='small' />
-      </IconButton>
-    </Tooltip>
-  )
-
-  return (
-    <>
-      {/*prettier-ignore*/}
-      <ListItem alignItems='flex-start' secondaryAction={sec_action}>
-        <ListItemText primary={author} secondary={comment.body} />
-      </ListItem>
-      <Divider variant='inset' component='li' />
-    </>
-  )
 }
 
 interface IComments {
@@ -111,8 +31,7 @@ export const Comments: FC<IComments> = (props) => {
       writing_query.refetch()
     }
   })
-
-  const like_mutate = api.writing.like_comment.useMutation({
+const like_mutate = api.writing.like_comment.useMutation({
     onSuccess: () => {
       writing_query.refetch()
     }
@@ -120,7 +39,7 @@ export const Comments: FC<IComments> = (props) => {
 
   const form_context = props.form_context
 
-  const [user_comment, set_user_comment] = useState<Omit<Comment, 'writing_id'>>()
+  const [user_comment, set_user_comment] = useState<Omit<_Comment, 'writing_id'>>()
 
   const [comments, set_comments] = useState<IComment[]>()
 
@@ -131,7 +50,7 @@ export const Comments: FC<IComments> = (props) => {
   const _comments = writing.comments
 
   useEffect(() => {
-    set_comments(_comments.filter((comment: Comment) => comment.user_id !== _user_comment?.user_id))
+    set_comments(_comments.filter((comment: _Comment) => comment.user_id !== _user_comment?.user_id))
   }, [_comments])
 
   useEffect(() => {
@@ -172,7 +91,7 @@ export const Comments: FC<IComments> = (props) => {
     if (writing_query.data.user_comment && !disable_comment) {
       set_user_comment(undefined) // optimistic update
       try {
-        comment_mutate.mutateAsync({ writing_id: writing.id, body: 'delete_comment', action: 'delete' })
+        comment_mutate.mutateAsync({ writing_id: writing.id })
       } catch (err) {
         throw err
       }
@@ -194,12 +113,12 @@ export const Comments: FC<IComments> = (props) => {
         secondaryAction={
           <Tooltip title='Delete Comment'>
             <IconButton edge='end' aria-label='delete' onClick={() => delete_comment()}>
-              <DeleteIcon color='error' fontSize='small' />
+              <DeleteIcon color='secondary' fontSize='small' />
             </IconButton>
           </Tooltip>
         }
       >
-        <ListItemText primary={writing_query?.data?.username} secondary={user_comment.body} />
+        <ListItemText primary={writing_query?.data?.username + ' ( you )'} secondary={user_comment.body} />
       </ListItem>
       <Divider variant='inset' component='li' />
     </>

@@ -48,7 +48,7 @@ const create_theme = (mode: 'light' | 'dark', opts: Partial<ThemeOptions>) => cr
       paper: mode === 'light' ? '#fff' : tailwind_config.theme.colors.formal.DEFAULT
     },
     primary: {
-      main: tailwind_config.theme.colors.sky['600']
+      main: tailwind_config.theme.colors.sky['500']
     },
     secondary: {
       main: tailwind_config.theme.colors.rose['400']
