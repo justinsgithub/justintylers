@@ -1,5 +1,6 @@
 ---
 title: Grow My Beard
+date: 2021
 ---
 
 Been thinking I might grow out my beard

@@ -2,6 +2,7 @@ import { useEffect, useState, type FC } from 'react'
 import { api } from '@/client/api'
 import type { Like, Reply } from '@prisma/client'
 import { type FieldError, FormContainer, type SubmitHandler, TextFieldElement, UseFormReturn } from 'react-hook-form-mui'
+import ClickAwayListener from '@mui/base/ClickAwayListener'
 import ThumbUpAlt from '@mui/icons-material/ThumbUpAlt'
 import ThumbUpOffAlt from '@mui/icons-material/ThumbUpOffAlt'
 import Box from '@mui/material/Box'
@@ -13,7 +14,8 @@ import Divider from '@mui/material/Divider'
 import ListItemText from '@mui/material/ListItemText'
 import SendIcon from '@mui/icons-material/Send'
 import Tooltip from '@mui/material/Tooltip'
-import { Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
+import { Stack } from '@mui/system'
 
 type LikeComment = (like: boolean, comment_id: string) => Promise<Like>
 
@@ -30,6 +32,8 @@ interface ICommentProps {
   comment: IComment
   user_id: string
   like_comment: LikeComment
+  replying: string
+  set_replying: (id: string) => void
 }
 
 export const Comment: FC<ICommentProps> = (props) => {
@@ -78,15 +82,28 @@ export const Comment: FC<ICommentProps> = (props) => {
       <IconButton edge='end' aria-label='like' onClick={() => handle_click(true)}> <ThumbUpOffAlt fontSize='small' /> </IconButton>
     </Tooltip>
 
-  const reply = (
-    <>
-      <Typography sx={{ cursor: 'pointer' }} onClick={() => console.log('REPLYING')} component='span' variant='body2' color='primary'>
+  const submit = () => {
+    console.log('SUBMITTING REPLY')
+  }
+
+  const reply =
+    props.replying === _comment.id ? (
+      <FormContainer onSuccess={submit}>
+        <ClickAwayListener onClickAway={() => props.set_replying('')}>
+          <Stack mt={1} gap={1}>
+            <TextFieldElement variant='standard' name='reply' placeholder='reply' multiline size='small' fullWidth />
+            <Button variant='outlined' type='submit'>
+              Reply
+            </Button>
+          </Stack>
+        </ClickAwayListener>
+      </FormContainer>
+    ) : (
+      <Typography sx={{ cursor: 'pointer' }} onClick={() => props.set_replying(_comment.id)} component='span' variant='body2' color='primary'>
         <br />
         Reply
       </Typography>
-      <TextFieldElement name='reply' label='leave a comment' multiline size='small' fullWidth />
-    </>
-  )
+    )
 
   // prettier-ignore
   const view_more = comment.body.length > comment_len && comment.view_more && <Typography sx={{ display: 'inline', cursor: 'pointer' }} onClick={() => set_comment({ body: _body , view_more: false })} component='span' variant='body2' color='InactiveCaption' > View More </Typography>

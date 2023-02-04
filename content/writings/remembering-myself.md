@@ -1,5 +1,6 @@
 ---
 title: Remembering Myself
+date: 2021
 ---
 
 Feels like it's been so damn long

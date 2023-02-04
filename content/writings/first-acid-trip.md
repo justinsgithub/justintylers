@@ -1,5 +1,6 @@
 ---
 title: First Acid Trip
+date: 2021
 ---
 
 It was Summer 2016

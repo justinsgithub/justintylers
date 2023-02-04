@@ -31,7 +31,7 @@ export const Comments: FC<IComments> = (props) => {
       writing_query.refetch()
     }
   })
-const like_mutate = api.writing.like_comment.useMutation({
+  const like_mutate = api.writing.like_comment.useMutation({
     onSuccess: () => {
       writing_query.refetch()
     }
@@ -43,11 +43,17 @@ const like_mutate = api.writing.like_comment.useMutation({
 
   const [comments, set_comments] = useState<IComment[]>()
 
+  const [replying, _set_replying] = useState('')
+
   const writing = writing_query.data.writing
 
   const _user_comment = writing_query.data.user_comment
 
   const _comments = writing.comments
+
+  const set_replying = (id: string) => {
+    _set_replying(id)
+  }
 
   useEffect(() => {
     set_comments(_comments.filter((comment: _Comment) => comment.user_id !== _user_comment?.user_id))
@@ -123,28 +129,37 @@ const like_mutate = api.writing.like_comment.useMutation({
       <Divider variant='inset' component='li' />
     </>
   ) : (
-    <ListItem alignItems='flex-start' disableGutters sx={{ pl: 1, pr: 0.5 }}>
-      {/* prettier-ignore */}
-      <TextFieldElement parseError={handle_error} name='comment' label='leave a comment' multiline size='small' fullWidth validation={comment_val} />
-      <Tooltip title='Submit Comment'>
-        <IconButton type='submit' aria-label='submit comment'>
-          <SendIcon color='primary' />
-        </IconButton>
-      </Tooltip>
-    </ListItem>
+    <FormContainer onSuccess={submit} formContext={form_context}>
+      <ListItem alignItems='flex-start' disableGutters sx={{ pl: 1, pr: 0.5, mb: 2 }}>
+        {/* prettier-ignore */}
+        <TextFieldElement parseError={handle_error} name='comment' placeholder='leave a comment' multiline size='small' fullWidth validation={comment_val} />
+        <Tooltip title='Submit Comment'>
+          <IconButton type='submit' aria-label='submit comment'>
+            <SendIcon color='primary' />
+          </IconButton>
+        </Tooltip>
+      </ListItem>
+    </FormContainer>
   )
 
   return (
     <Box sx={{ width: 350 }} role='presentation'>
-      <FormContainer onSuccess={submit} formContext={form_context}>
-        <List sx={{ width: '100%', maxWidth: 350, bgcolor: 'background.paper' }}>
-          {UserComment}
-          {comments &&
-            comments.map((comment) => {
-              return <Comment key={comment.id} comment={comment} user_id={writing_query.data.user_id} like_comment={like_comment} />
-            })}
-        </List>
-      </FormContainer>
+      <List sx={{ width: '100%', maxWidth: 350, bgcolor: 'background.paper' }}>
+        {UserComment}
+        {comments &&
+          comments.map((comment) => {
+            return (
+              <Comment
+                key={comment.id}
+                replying={replying}
+                set_replying={set_replying}
+                comment={comment}
+                user_id={writing_query.data.user_id}
+                like_comment={like_comment}
+              />
+            )
+          })}
+      </List>
     </Box>
   )
 }

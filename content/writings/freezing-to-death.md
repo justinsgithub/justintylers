@@ -1,5 +1,6 @@
 ---
 title: Freezing to Death
+date: 2021
 ---
 
 It's March 2016, I'm 20 years old.

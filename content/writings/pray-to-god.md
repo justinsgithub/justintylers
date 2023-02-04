@@ -1,5 +1,6 @@
 ---
 title: Pray To God 
+date: 2021
 ---
 
 Pray to god let me kiss girls 

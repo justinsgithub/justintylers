@@ -1,5 +1,6 @@
 ---
 title: Airport Detox
+date: 2021
 ---
 
 I'm visiting my family for the holidays

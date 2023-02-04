@@ -1,5 +1,6 @@
 ---
 title: Bored Games
+date: 2021
 ---
 
 It is the most frustrating game

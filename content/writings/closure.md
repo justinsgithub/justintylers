@@ -1,5 +1,6 @@
 ---
 title: Closure
+date: 02-03-2023
 ---
 
 5 AM in the morning and I feel like I didn't sleep a wink.

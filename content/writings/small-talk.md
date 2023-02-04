@@ -1,5 +1,6 @@
 ---
 title: Small Talk
+date: 2021
 ---
 
 Don't mean to be rude

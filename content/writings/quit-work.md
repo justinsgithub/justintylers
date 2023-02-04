@@ -1,5 +1,6 @@
 ---
 title: Quit Work 
+date: 2021
 ---
 
 I truly try my hardest 

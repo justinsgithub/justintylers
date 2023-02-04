@@ -1,5 +1,6 @@
 ---
 title: Playing Daddy 
+date: 2021
 ---
 
 So tired of this shit 

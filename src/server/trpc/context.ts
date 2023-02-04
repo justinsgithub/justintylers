@@ -44,11 +44,10 @@ export const createContext = async (opts: CreateNextContextOptions) => {
       deleteCookie('g', {req, res})
       try {
         // TODO: need to change this to use prisma CONNECT api transfer guest content to user content 
-        const guest = await prisma.guest.delete({ where: { id: gid }, include: { comments: true, deleted_comments: true, likes: true } })
+        const guest = await prisma.guest.delete({ where: { id: gid }, include: { comments: true, likes: true } })
         const likes = guest.likes.length > 0 ? { create: guest.likes } : undefined
         const comments = guest.comments.length > 0 ? { create: guest.comments } : undefined
-        const deleted_comments = guest.deleted_comments.length > 0 ? { create: guest.deleted_comments } : undefined
-        await prisma.user.update({ where: { id: session.user.id }, data: { likes, comments, deleted_comments } })
+        await prisma.user.update({ where: { id: session.user.id }, data: { likes, comments } })
       } catch (error) {
         console.log(error)
       }
