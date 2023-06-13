@@ -1,8 +1,8 @@
 import { useEffect, useState, type FC } from 'react'
 import { api } from '@/client/api'
 import type { Comment as _Comment } from '@prisma/client'
-import { Comment, IComment } from './comment'
-import { type FieldError, FormContainer, type SubmitHandler, TextFieldElement, UseFormReturn } from 'react-hook-form-mui'
+import { Comment, type IComment } from './comment'
+import { type FieldError, FormContainer, type SubmitHandler, TextFieldElement, type UseFormReturn } from 'react-hook-form-mui'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Box from '@mui/material/Box'
@@ -26,15 +26,14 @@ export const Comments: FC<IComments> = (props) => {
   const writing_query = props.writing_query
   /* const writing_query = api.writing.by_slug.useQuery({ slug: '1-am' }) */
 
+  const refetch = () => {writing_query.refetch()}
+
   const comment_mutate = api.writing.comment.useMutation({
-    onSuccess: () => {
-      writing_query.refetch()
-    }
+    onSuccess: refetch
   })
+
   const like_mutate = api.writing.like_comment.useMutation({
-    onSuccess: () => {
-      writing_query.refetch()
-    }
+    onSuccess: refetch
   })
 
   const form_context = props.form_context
@@ -57,15 +56,15 @@ export const Comments: FC<IComments> = (props) => {
 
   useEffect(() => {
     set_comments(_comments.filter((comment: _Comment) => comment.user_id !== _user_comment?.user_id))
-  }, [_comments])
+  }, [_comments, _user_comment?.user_id])
 
   useEffect(() => {
     set_user_comment(_user_comment)
   }, [_user_comment])
 
-  console.log('COMMENTS', comments)
-
-  console.log('USER COMMENT', user_comment)
+  /* console.log('COMMENTS', comments) */
+  /**/
+  /* console.log('USER COMMENT', user_comment) */
 
   const comment_val = {
     required: true,
@@ -75,14 +74,16 @@ export const Comments: FC<IComments> = (props) => {
   const disable_comment = writing_query.isRefetching || comment_mutate.isLoading
 
   const submit: SubmitHandler<IFormValues> = (values) => {
-    console.log('Submitting', values)
-    console.log(form_context)
+    /* console.log('Submitting', values) */
+    /* console.log(form_context) */
     if (!writing_query.data.user_comment && !disable_comment) {
       set_user_comment({ body: values.comment, id: 'temp00', created_at: new Date(Date.now()), user_id: '' })
       try {
         comment_mutate.mutateAsync({ writing_id: writing.id, body: values.comment, action: 'create' })
       } catch (err) {
-        console.log(err)
+        /* console.log(err) */
+        /* throw err */
+        return
       }
     }
     form_context.reset()
@@ -93,7 +94,7 @@ export const Comments: FC<IComments> = (props) => {
   }
 
   const delete_comment = () => {
-    console.log('DELETE COMMENT')
+    /* console.log('DELETE COMMENT') */
     if (writing_query.data.user_comment && !disable_comment) {
       set_user_comment(undefined) // optimistic update
       try {
@@ -156,6 +157,7 @@ export const Comments: FC<IComments> = (props) => {
                 comment={comment}
                 user_id={writing_query.data.user_id}
                 like_comment={like_comment}
+                refetch={refetch}
               />
             )
           })}

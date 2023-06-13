@@ -27,11 +27,7 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  **/
 export const createContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts
-
   const gid = req.cookies['g']
-
-  console.log('GID', gid)
-
   let user_id: string
   let username: string
 
@@ -42,17 +38,16 @@ export const createContext = async (opts: CreateNextContextOptions) => {
     user_id = session.user.id
     if (gid) {
       deleteCookie('g', {req, res})
-      try {
-        // TODO: need to change this to use prisma CONNECT api transfer guest content to user content 
-        const guest = await prisma.guest.delete({ where: { id: gid }, include: { comments: true, likes: true } })
-        const likes = guest.likes.length > 0 ? { create: guest.likes } : undefined
-        const comments = guest.comments.length > 0 ? { create: guest.comments } : undefined
-        await prisma.user.update({ where: { id: session.user.id }, data: { likes, comments } })
-      } catch (error) {
-        console.log(error)
-      }
+      /* try { */
+      /*   // TODO: need to change this to use prisma CONNECT api transfer guest content to user content  */
+      /*   const guest = await prisma.guest.delete({ where: { id: gid }, include: { comments: true, likes: true } }) */
+      /*   const likes = guest.likes.length > 0 ? { create: guest.likes } : undefined */
+      /*   const comments = guest.comments.length > 0 ? { create: guest.comments } : undefined */
+      /*   await prisma.user.update({ where: { id: session.user.id }, data: { likes, comments } }) */
+      /* } catch (error) { */
+      /*   console.log(error) */
+      /* } */
     }
-
     if (session?.user?.name) {
       username = session?.user?.name
     } else {

@@ -4,18 +4,19 @@ import { markdown_to_html } from '@/server/markdown_html'
 import { Writing } from '@/components/writings/slug'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const writing_slugs = get_all_writings(['slug']).map((writing) => writing.slug)
-  return {
-    paths: writing_slugs.map((slug) => {
-      return {
-        params: {
-          slug
+
+    const writing_slugs = get_all_writings(['slug']).map((writing) => writing.slug)
+    return {
+      paths: writing_slugs.map((slug) => {
+        return {
+          params: {
+            slug
+          }
         }
-      }
-    }),
-    fallback: false
+      }),
+      fallback: false
+    }
   }
-}
 
 export const getStaticProps = async (context: GetStaticPropsContext<{ slug: string }>) => {
   const slug = context.params?.slug as string

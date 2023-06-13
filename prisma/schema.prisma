@@ -23,7 +23,6 @@ model Reply {
   parent    Reply?  @relation("nested_replies", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   children  Reply[] @relation("nested_replies")
 
-  @@unique([comment_id, user_id])
   @@unique([parent_id, user_id])
   @@map("replies")
 }

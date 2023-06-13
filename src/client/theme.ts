@@ -1,5 +1,5 @@
 import { Roboto } from '@next/font/google'
-import { createTheme, ThemeOptions } from '@mui/material/styles'
+import { createTheme, type ThemeOptions } from '@mui/material/styles'
 import resolve_config from 'tailwindcss/resolveConfig'
 import tailwind_config_file from 'tailwind.config.cjs'
 import type { Config } from 'tailwindcss'

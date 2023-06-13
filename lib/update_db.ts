@@ -6,7 +6,7 @@ const update_writings = async () => {
   const db_writings = await prisma.writing.findMany()
   const db_slugs = db_writings.map((writing) => writing.slug)
   const insert_these = writing_slugs.filter((slug) => typeof slug === 'string' && !db_slugs.includes(slug)) as string[]
-  console.log('INSERTING', insert_these)
+  /* console.log('INSERTING', insert_these) */
   if (insert_these.length > 0) {
     const formatted = insert_these.map((slug) => {
       return { slug }

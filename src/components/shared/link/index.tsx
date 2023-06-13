@@ -1,17 +1,16 @@
 import * as React from 'react'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
-import NextLink, { LinkProps as NextLinkProps } from 'next/link'
-import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link'
-import { styled } from '@mui/material/styles'
-
+import NextLink, { type LinkProps as NextLinkProps } from 'next/link'
+import MuiLink, { type LinkProps as MuiLinkProps } from '@mui/material/Link'
+import {   styled } from "@mui/material/styles"
 // Add support for the sx prop for consistency with the other branches.
+//
+
 const Anchor = styled('a')({})
 
-interface NextLinkComposedProps
-  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
-    Omit<NextLinkProps, 'href' | 'as' | 'passHref' | 'onMouseEnter' | 'onClick' | 'onTouchStart'> {
-  to: NextLinkProps['href']
+interface NextLinkComposedProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
+    Omit<NextLinkProps, 'href' | 'as' | 'passHref' | 'onMouseEnter' | 'onClick' | 'onTouchStart'> { to: NextLinkProps['href']
   linkAs?: NextLinkProps['as']
 }
 
@@ -19,7 +18,8 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
   const { to, linkAs, replace, scroll, shallow, prefetch, legacyBehavior = true, locale, ...other } = props
 
   return (
-    <NextLink href={to} prefetch={prefetch} as={linkAs} replace={replace} scroll={scroll} shallow={shallow} passHref locale={locale} legacyBehavior={legacyBehavior} >
+    <NextLink 
+      href={to} prefetch={prefetch} as={linkAs} replace={replace} scroll={scroll} shallow={shallow} passHref locale={locale} legacyBehavior={legacyBehavior} >
       <Anchor ref={ref} {...other} />
     </NextLink>
   )

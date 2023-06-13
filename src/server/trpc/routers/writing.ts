@@ -87,5 +87,31 @@ export const writing_router = router({
         }
       }
     })
+  }),
+
+  reply: pp_input({ comment_id: z.string(), parent_id: z.string().nullish(), body: z.string().min(5).nullish() }).mutation(async ({ ctx, input }) => {
+    const isUser = ctx?.session?.user?.id
+
+    if (input.body) {
+      return await ctx.prisma.reply.create({
+        data: {
+          body: input.body,
+          comment: { connect: { id: input.comment_id } },
+          parent: input.parent_id ? { connect: { id: input.parent_id } } : undefined,
+          user: isUser ? { connect: { id: isUser } } : undefined,
+          guest: !isUser ? { connect: { id: ctx.user_id } } : undefined
+        }
+      })
+    }
+
+    return await ctx.prisma.reply.delete({
+      where: {
+        parent_id_user_id: {
+          parent_id: input.parent_id,
+          user_id: ctx.user_id
+        }
+      }
+    })
   })
+  
 })

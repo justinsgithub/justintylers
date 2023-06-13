@@ -1,4 +1,4 @@
-import { NextPage } from 'next'
+import type { NextPage } from 'next'
 import { Home } from '@/components/home'
 
 const HomePage: NextPage = () => <Home />

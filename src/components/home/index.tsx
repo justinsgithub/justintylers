@@ -1,14 +1,14 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { Layout } from '@/components/shared/layout'
 import Head from 'next/head'
 import { Link } from '@/components/shared/link'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+/* import Button from '@mui/material/Button' */
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardActionArea from '@mui/material/CardActionArea'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
+/* import MenuItem from '@mui/material/MenuItem' */
+/* import Select from '@mui/material/Select' */
 import Typography from '@mui/material/Typography'
 import { PERSONAL_LINKS } from '@/constants'
 

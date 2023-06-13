@@ -1,7 +1,7 @@
-import { NextPage } from 'next'
+import type { NextPage } from 'next'
 import { Writings } from '@/components/writings'
 import { get_all_writings } from '@/server/get-writings'
-import { IWriting } from '@/types/writing'
+import type { IWriting } from '@/types/writing'
 
 interface IProps {
   all_writings: IWriting[]

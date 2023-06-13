@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import Head from 'next/head'
 import type { AppProps, AppType } from 'next/app'
 import type { Session } from 'next-auth'
@@ -59,6 +60,7 @@ const App: AppType<IApp> = (props: AppProps) => {
             <Head>
               <meta name='viewport' content='initial-scale=1, width=device-width' />
             </Head>
+            <Script async defer data-website-id="be546238-6290-48ab-bc1f-cae728c8a99c" src={process.env.NEXT_PUBLIC_UMAMI_URL}/>
             <CssBaseline />
             <div className={mode}>
               <Component {...pageProps} />
